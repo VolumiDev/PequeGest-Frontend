@@ -1,0 +1,64 @@
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <!-- Contenedor principal -->
+  <div class="w-full max-w-sm bg-white rounded-lg shadow-lg overflow-hidden">
+    <!-- Encabezado (con fondo oscuro) -->
+    <!-- <div class="bg-black p-6 text-center"> -->
+    <div class="bg-gradient-to-r from-rose-400 to-green-600 p-6 text-center">
+      <!-- Aquí podrías poner tu logo -->
+      <div class="flex justify-center mb-3">
+        <!-- Logo de ejemplo: un círculo con un degradado -->
+        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-green-600"></div>
+      </div>
+      <h2 class="text-white text-xl font-bold">Peque-Gestion</h2>
+      <p class="text-gray-300 mt-1">Log-In para comenzar</p>
+    </div>
+    
+    <!-- Cuerpo del formulario -->
+    <div class="p-6">
+      <form action="#" method="POST">
+        <!-- Campo: Username -->
+        <div class="mb-4">
+          <label for="username" class="block text-gray-700 font-semibold mb-2">
+            Username
+          </label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          />
+        </div>
+
+        <!-- Campo: Password -->
+        <div class="mb-4">
+          <label for="password" class="block text-gray-700 font-semibold mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+          />
+        </div>
+
+        <!-- Opciones: Recordarme y ¿Olvidaste tu contraseña? -->
+        <div class="flex items-center justify-between mb-4">
+          <a href="#" class="text-sm text-green-600 hover:underline">
+            Forgot password?
+          </a>
+        </div>
+
+        <!-- Botón de login -->
+        <button
+          type="submit"
+          class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-md transition duration-300"
+          >
+          Log In
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
