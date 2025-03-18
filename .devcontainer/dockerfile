@@ -1,0 +1,20 @@
+# Usa una imagen base de Node compatible con Angular 19 (por ejemplo, Node 18 o superior)
+FROM node:22-bookworm
+
+# Instala Angular CLI globalmente
+RUN npm install -g @angular/cli@19
+
+# Establece el directorio de trabajo
+WORKDIR /workspace
+
+# Copia los archivos package.json y package-lock.json para aprovechar la cache de Docker
+# COPY my-angular-app/package*.json ./my-angular-app/
+
+# Instala las dependencias de la aplicación Angular
+# RUN cd my-angular-app && npm install
+
+# Expone el puerto 4200 para Angular
+EXPOSE 4200
+
+# Comando por defecto (esto se puede sobreescribir en la configuración de devcontainer.json)
+CMD ["tail", "-f", "/dev/null"]
