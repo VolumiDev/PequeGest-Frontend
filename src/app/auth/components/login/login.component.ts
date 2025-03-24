@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
     }
   `
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   signInForm!: UntypedFormGroup
   submitted: boolean = false
 
@@ -21,8 +21,8 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.signInForm = this.fb.group({
-      email: ['user@demo.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}$')]],
     })
   }
 
