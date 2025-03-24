@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/Auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
   submitted: boolean = false
 
   public fb = inject(UntypedFormBuilder)
+  public authService = inject(AuthService);
   // public store = inject(Store)
 
   ngOnInit(): void {
@@ -30,7 +32,7 @@ export class LoginComponent {
     return this.signInForm.controls
   }
 
-  login() {
+  onSubmit() {
     this.submitted = true
     if (this.signInForm.valid) {
       const email = this.formValues['email'].value
