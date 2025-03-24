@@ -1,10 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+
+import { Component, inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../services/Auth.service';
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [RouterLink, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styles: `
     :host {
@@ -12,17 +14,18 @@ import { RouterLink } from '@angular/router';
     }
   `
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent {
   signInForm!: UntypedFormGroup
   submitted: boolean = false
 
   public fb = inject(UntypedFormBuilder)
+  public authService = inject(AuthService);
   // public store = inject(Store)
 
   ngOnInit(): void {
     this.signInForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{6,}$')]],
+      email: ['user@demo.com', [Validators.required, Validators.email]],
+      password: ['123456', [Validators.required]],
     })
   }
 
@@ -30,7 +33,7 @@ export class LoginComponent implements OnInit{
     return this.signInForm.controls
   }
 
-  login() {
+  onSubmit() {
     this.submitted = true
     if (this.signInForm.valid) {
       const email = this.formValues['email'].value
