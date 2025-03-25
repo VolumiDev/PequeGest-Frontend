@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-{
-  "angular-schematics.schematicsDefaultOptions": {
-    "angular-*": {
-      "inlineStyle": true,
-      "externalTemplate": true
-    }
-  }
-=======
+
 {
   "angular-schematics.schematicsDefaultOptions": {
     "angular-*": {
@@ -20,5 +12,4 @@
       "skipChangeDetectionOnPush": true
     }
   }
->>>>>>> 2e57f69edc5bb93272031014ea7ac1d92947bc1c
 }

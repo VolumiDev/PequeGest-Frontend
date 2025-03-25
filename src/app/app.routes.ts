@@ -1,12 +1,17 @@
 
 import { Routes } from '@angular/router';
-import { LoginComponent } from './auth/components/login/login.component';
 
 export const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => import('./auth/auth.routes')
+    loadChildren: () => 
+      import('./auth/auth.routes')
     //TODO guards,
+  },
+  {
+    path: 'home',
+    loadChildren:() => 
+      import('./pages/main.routes').then((m) => m.routes)
   },
 
 

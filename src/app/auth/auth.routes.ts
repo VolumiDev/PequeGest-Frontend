@@ -1,6 +1,6 @@
 import { Routes } from "@angular/router"
 import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component"
-import { LoginPageComponent } from "./pages/loginPage/loginPage.component"
+import { LoginPageComponent } from './pages/loginPage/loginPage.component';
 import { ForgotPasswordComponent } from "./pages/forgotPassword/forgotPassword.component";
 
 export const authRoutes: Routes = [
@@ -11,11 +11,13 @@ export const authRoutes: Routes = [
     children: [
       {
         path: 'login',
-        component: LoginPageComponent,
+        loadComponent: () =>
+          import('./pages/loginPage/loginPage.component').then((c) => c.LoginPageComponent),
       },
       {
         path: 'forgot-password',
-        component: ForgotPasswordComponent,
+        loadComponent: () => 
+          import('./pages/forgotPassword/forgotPassword.component').then((c) => c.ForgotPasswordComponent),
       },
       {
         path: '**',
