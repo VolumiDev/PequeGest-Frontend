@@ -1,4 +1,3 @@
-
 {
   "name": "peque-front",
   "version": "0.0.0",
@@ -19,6 +18,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@tailwindcss/postcss": "^4.0.14",
+    "jwt-decode": "^4.0.0",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
     "tailwindcss": "^4.0.14",

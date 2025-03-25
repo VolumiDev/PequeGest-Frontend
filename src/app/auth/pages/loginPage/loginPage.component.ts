@@ -42,8 +42,7 @@ export class LoginPageComponent {
     this.authService.login(email!, password!).subscribe(isAuthenticated => {
       
       if (isAuthenticated) {
-        console.log('redirect');
-        this.router.navigateByUrl('/auth/forgot-password')
+        this.router.navigateByUrl('/home')
         return
       }
 

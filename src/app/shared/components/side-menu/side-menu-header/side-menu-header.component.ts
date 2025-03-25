@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../../../../auth/services/Auth.service';
 
 @Component({
   selector: 'app-side-menu-header',
@@ -10,4 +11,12 @@ import { Component } from '@angular/core';
     }
   `,
 })
-export class SideMenuHeaderComponent { }
+export class SideMenuHeaderComponent {
+
+  title1: string = "Peque"
+  title2: string = "Gest"
+
+  authService = inject(AuthService);
+
+  
+}

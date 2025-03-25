@@ -6,6 +6,9 @@ import { catchError, map, Observable, of, tap } from 'rxjs';
 
 import { AuthResponse } from '../interfaces/AuthResponse.interface';
 import { UserAuth } from '../interfaces/UserAuth.interface';
+import { Router } from '@angular/router';
+
+
 
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
@@ -14,12 +17,13 @@ const baseUrl = environment.baseUrl;
 export class AuthService {
   private _authStatus = signal<AuthStatus>('checking');
   private _user = signal<UserAuth | null>(null);
-  private _token = signal<string | null>(null);
+  private _token = signal<string | null>(localStorage.getItem('token'));
 
   private http = inject(HttpClient);
+  private router = inject(Router);
 
   checkStatusResource = rxResource({
-    loader: () => this.checkStatus()
+    loader: () => this.checkStatus(),
   });
 
   authStatus = computed<AuthStatus>(() => {
@@ -38,6 +42,14 @@ export class AuthService {
 
 
   login(email: string, password: string): Observable<boolean> {
+
+    console.log(`${baseUrl}/auth/login`, 
+      {
+        email: email,
+        password: password
+      }
+    )
+
     return this.http.post<AuthResponse>(`${baseUrl}/auth/login`, {
       email: email,
       password: password
@@ -58,14 +70,15 @@ export class AuthService {
     }
 
     return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
     }).pipe(
       map((resp) => this.handleAuthSuccess(resp)),
       catchError((error: any) => this.handelAuthError(error))
     )
   }
+
 
 
   logout(){
@@ -74,6 +87,16 @@ export class AuthService {
     this._authStatus.set('not-authenticated');
 
     localStorage.removeItem('token');
+  }
+  
+  sessionClose(){
+    this._user.set(null);
+    this._token.set(null);
+    this._authStatus.set('not-authenticated');
+  
+    localStorage.removeItem('token');
+    
+    this.router.navigateByUrl("/auth/login");
   }
 
 
