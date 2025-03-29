@@ -23,8 +23,8 @@ export const routes: Routes = [
       },
       {
         path: 'users',
-        loadComponent: () => 
-          import('./users-page/users-page.component').then((c) => c.UsersPageComponent)
+        loadChildren: () => 
+          import('./users-page/user.routes').then((m) => m.routes)
       },
       {
         path: '**',
