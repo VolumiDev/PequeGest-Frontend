@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { StudentService } from '../../../../services/StudentService.service';
-import { Student } from '../../../../interfaces/Student.interface';
+import { StudentService } from '../../../../../services/StudentService.service';
+import { Student } from '../../../../../interfaces/Student.interface';
 import { tap } from 'rxjs';
 
 @Component({
