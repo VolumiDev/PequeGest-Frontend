@@ -1,0 +1,68 @@
+<div class="w-full">
+    <form class="w-full" >
+      <div class="flex">
+        <!-- nombre -->
+          <fieldset class="fieldset">
+              <legend class="fieldset-legend">Nombre</legend>
+              <input type="text" class="input" placeholder="Type here" />
+              <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+            </fieldset>
+        <!-- apellidos -->
+        <fieldset class="fieldset w-full">
+          <legend class="fieldset-legend">Apellidos</legend>
+          <input type="text" class="input" placeholder="Type here" />
+          <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+        </fieldset>
+      </div>
+  
+      <div class="flex">
+        <!-- nacionalidad -->
+        <fieldset class="fieldset w-full">
+          <legend class="fieldset-legend">Nacionalidad</legend>
+          <select class="select">
+            <option disabled selected>Selecciona un pais</option>
+            
+            <!-- <option>nacionalidad</option> -->
+          </select>
+          <!-- <span class="fieldset-label">Obligatorio</span> -->
+        </fieldset>
+        <!-- dni-nie -->
+        <fieldset class="fieldset w-full">
+            <legend class="fieldset-legend">dni-nie</legend>
+            <input type="text" class="input" placeholder="Type here" />
+            <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+          </fieldset>
+      </div>
+  
+      <div class="flex">
+        <div class="flex">
+            <!-- telefono -->
+              <fieldset class="fieldset">
+                  <legend class="fieldset-legend">Telefono</legend>
+                  <input type="text" class="input" placeholder="Type here" />
+                  <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+                </fieldset>
+            <!-- email -->
+            <fieldset class="fieldset w-full">
+              <legend class="fieldset-legend">Email</legend>
+              <input type="text" class="input" placeholder="Type here" />
+              <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+            </fieldset>
+          </div>
+        
+      </div>
+  
+      <div class="flex flex-row justify-end">
+  
+        <input type="submit" class="btn btn-accent mx-5" value="Añadir">
+  
+      </div>
+  
+  
+      <!-- @if(isVisibleParentForm){
+        <div class="flex">
+          <app-parent-form/>
+        </div>
+  
+      } -->
+    </form>
