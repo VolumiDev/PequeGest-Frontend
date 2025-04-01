@@ -1,87 +1,179 @@
-
 <div class="w-full">
-  <form class="w-full" >
+  <form class="w-full" [formGroup]="this.studentForm">
     <div class="flex">
       <!-- nombre -->
-        <fieldset class="fieldset m-3">
-            <legend class="fieldset-legend">Nombre</legend>
-            <input type="text" class="input" placeholder="Type here" />
-            <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-          </fieldset>
+      <fieldset class="fieldset m-3">
+        <legend class="fieldset-legend">Nombre</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Nombre"
+          formControlName="name"
+        />
+
+        @if(this.formUtils.isValidField(this.studentForm, 'name')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "name") }}
+        </span>
+        }
+      </fieldset>
       <!-- apellidos -->
       <fieldset class="fieldset m-3 w-full">
         <legend class="fieldset-legend">Apellidos</legend>
-        <input type="text" class="input" placeholder="Type here" />
-        <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+        <input
+          type="text"
+          class="input"
+          placeholder="Introduce apellidos"
+          formControlName="lastname"
+        />
+
+        @if(this.formUtils.isValidField(this.studentForm, 'lastname')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "lastname") }}
+        </span>
+        }
       </fieldset>
     </div>
 
-    <div class="flex">
-      <!-- nacionalidad -->
-      <fieldset class="fieldset  m-3 w-full">
-        <legend class="fieldset-legend">Nacionalidad</legend>
-        <select class="select">
-          <option disabled selected>Selecciona un pais</option>
-          
-          <!-- <option>nacionalidad</option> -->
-        </select>
-        <!-- <span class="fieldset-label">Obligatorio</span> -->
-      </fieldset>
+    <div class="flex justify-center items-center">
+      <div class="flex flex-col">
+        <!-- nacionalidad -->
+        <fieldset class="fieldset m-3 w-full">
+          <legend class="fieldset-legend">Region</legend>
+          <select class="select" formControlName="region">
+            <option disabled selected>Selecciona un continente</option>
+
+            @for (region of this.studentFormServices.regions; track region) {
+            <option>{{ region }}</option>
+
+            }
+          </select>
+
+          @if(this.formUtils.isValidField(this.studentForm, 'region')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.studentForm, "region") }}
+          </span>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset m-3 w-full">
+          <legend class="fieldset-legend">Nacionalidad</legend>
+          <select class="select" formControlName="country">
+            <option disabled selected>Selecciona un pais</option>
+
+            @for (country of countriesByRegion(); track country.cca3) {
+            <option selected>{{ country.name.common }}</option>
+
+            }
+          </select>
+
+          @if(this.formUtils.isValidField(this.studentForm, 'country')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.studentForm, "country") }}
+          </span>
+          }
+        </fieldset>
+      </div>
+
       <!-- fecha de nacimiento -->
-      <fieldset class="fieldset m-3 w-full">
+      <fieldset class="fieldset m-3 w-full px-10">
         <legend class="fieldset-legend">Fecha de nacimiento</legend>
-        <input type="date" class="input"/>
-        <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+        <input type="date" class="input" formControlName="birthdate" />
+
+        @if(this.formUtils.isValidField(this.studentForm, 'birthdate')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "birthdate") }}
+        </span>
+        }
       </fieldset>
     </div>
 
     <div class="flex">
       <!-- alimentacion -->
-      <fieldset class="fieldset  m-3 w-full">
+      <fieldset class="fieldset m-3 w-full">
         <legend class="fieldset-legend">Tipo de alimentación</legend>
-        <select class="select">
+        <select class="select" formControlName="alimentation">
           <option disabled selected>Selecciona un alimentación</option>
-          
+          <option>Triturado</option>
+          <option>Entero</option>
+          <option>Biberón</option>
+
           <!-- <option>alimentacion</option> -->
         </select>
-        <!-- <span class="fieldset-label">Obligatorio</span> -->
+
+        @if(this.formUtils.isValidField(this.studentForm, 'alimentation')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "alimentation") }}
+        </span>
+        }
       </fieldset>
       <!-- fecha de nacimiento -->
-      <fieldset class="fieldset  m-3 w-full">
+      <fieldset class="fieldset m-3 w-full">
         <legend class="fieldset-legend">Aula</legend>
-        <select class="select">
+        <select class="select" formControlName="classroom">
           <option disabled selected>Selecciona aula</option>
-          
+
           <!-- <option>Aula</option> -->
         </select>
-        <!-- <span class="fieldset-label">Obligatorio</span> -->
+
+        @if(this.formUtils.isValidField(this.studentForm, 'classroom')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "classroom") }}
+        </span>
+        }
       </fieldset>
     </div>
 
     <div class="flex flex-row justify-end">
+      <input
+        type="submit"
+        class="btn btn-accent mx-5"
+        value="Guardar"
+        (click)="onSubmitStudent()"
+      />
 
-      <input type="submit" class="btn btn-accent mx-5" value="Guardar">
-
-      <button class="btn btn-circle btn-warning mx-5" 
+      <button
+        class="btn btn-circle btn-warning mx-5"
         (click)="changeParentFormVisibility($event)"
       >
-        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6 12H18M12 6V18" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <svg
+          width="800px"
+          height="800px"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6 12H18M12 6V18"
+            stroke="#000000"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
     </div>
 
-
     @if(isVisibleParentForm){
-      <div class="flex">
-        <app-parent-form/>
-      </div>
+    <div class="flex">
+      <app-parent-form />
+    </div>
 
     }
 
+    <span>Valid</span>
+    <pre>{{ studentForm.valid | json }}</pre>
+    <br />
 
+    <span>Value</span>
+    <pre>{{ studentForm.value | json }}</pre>
+    <br />
 
-    <div class=" w-full">
+    <span>Errors</span>
+    <pre>{{ studentForm.controls["name"].errors | json }}</pre>
+    <br />
+
+    <div class="w-full">
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Comentarios</legend>
         <textarea class="textarea h-24 w-full" placeholder="Bio"></textarea>
