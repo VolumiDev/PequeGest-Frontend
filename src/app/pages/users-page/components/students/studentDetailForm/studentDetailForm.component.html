@@ -78,7 +78,7 @@
       <!-- fecha de nacimiento -->
       <fieldset class="fieldset m-3 w-full px-10">
         <legend class="fieldset-legend">Fecha de nacimiento</legend>
-        <input type="date" class="input" formControlName="birthdate" />
+        <input type="date" class="input" formControlName="birthdate" [max]="maxDate"/>
 
         @if(this.formUtils.isValidField(this.studentForm, 'birthdate')){
         <span class="fieldset-label text-error">

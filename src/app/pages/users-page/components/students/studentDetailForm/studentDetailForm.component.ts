@@ -22,6 +22,7 @@ export class StudentDetailFormComponent {
   studentFormServices = inject(StudentFormServiceService);
   formUtils = FormUtils;
 
+  maxDate: string = this.todayFormater();
   isVisibleParentForm: boolean = false;
   countriesByRegion = signal<Country[]>([]);
 
@@ -49,7 +50,6 @@ export class StudentDetailFormComponent {
     return this.studentForm
       .get('region')!
       .valueChanges.pipe(
-        tap(() => console.log('disparo')),
         tap(() => this.studentForm.get('country')?.setValue('')),
         tap(() => {
           this.countriesByRegion.set([]);
@@ -64,6 +64,8 @@ export class StudentDetailFormComponent {
   }
 
   onSubmitStudent() {
+    console.log(this.maxDate);
+    
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
       return;
@@ -88,5 +90,14 @@ export class StudentDetailFormComponent {
       this.isVisibleParentForm = true;
     }
     console.log(this.isVisibleParentForm);
+  }
+
+  todayFormater(): string{
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}`
   }
 }
