@@ -1,4 +1,11 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ParentFormComponent } from '../parentForm/parentForm.component';
 import {
   FormBuilder,
@@ -8,23 +15,32 @@ import {
 } from '@angular/forms';
 import { FormUtils } from '../../../../../utils/FormUtils';
 import { JsonPipe } from '@angular/common';
-import { StudentFormServiceService } from '../../../services/studentFormService.service';
+import { CountryService } from '../../../../../services/country.services/country.service';
 import { Country } from '../../../interfaces/country.interface';
 import { switchMap, tap } from 'rxjs';
+import { Classroom } from '../../../../../interfaces/Classroom.inteface';
+import { StudentFormService } from '../../../../../services/student.services/studentForm.service';
+import { ClassroomFormInput } from '../../../interfaces/classroomFormInput.interface';
 
 @Component({
   selector: 'app-student-detail-form',
   imports: [ParentFormComponent, ReactiveFormsModule, JsonPipe],
   templateUrl: './studentDetailForm.component.html',
 })
-export class StudentDetailFormComponent {
+export class StudentDetailFormComponent implements OnInit {
+  ngOnInit(): void {}
+
   fb = inject(FormBuilder);
-  studentFormServices = inject(StudentFormServiceService);
+  countryService = inject(CountryService);
+  studentFormService = inject(StudentFormService);
+
   formUtils = FormUtils;
 
-  maxDate: string = this.todayFormater();
+  maxDate: string = this.formUtils.customDateFormater();
   isVisibleParentForm: boolean = false;
   countriesByRegion = signal<Country[]>([]);
+  _classrooms = signal<ClassroomFormInput[]>([]);
+  classrooms = computed<ClassroomFormInput[]>(() => this._classrooms());
 
   studentForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
@@ -38,39 +54,28 @@ export class StudentDetailFormComponent {
   });
 
   onFormChanged = effect((onCleanUp) => {
-    const regionSubcription = this.onRegionChange();
-    console.log('Estamos en el cambio');
+    const regionSubcription = this.countryService.onRegionChange(
+      this.studentForm,
+      this.countriesByRegion
+    );
+    const classroomSubscription = this.getClassrooms();
 
     onCleanUp(() => {
       regionSubcription.unsubscribe();
+      classroomSubscription.unsubscribe();
     });
   });
 
-  onRegionChange() {
-    return this.studentForm
-      .get('region')!
-      .valueChanges.pipe(
-        tap(() => this.studentForm.get('country')?.setValue('')),
-        tap(() => {
-          this.countriesByRegion.set([]);
-        }),
-        switchMap((region) =>
-          this.studentFormServices.getCountriesByRegion(region ?? '')
-        )
-      )
-      .subscribe((countries) => {
-        this.countriesByRegion.set(countries);
-      });
-  }
-
   onSubmitStudent() {
-    console.log(this.maxDate);
-    
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
       return;
     }
     console.log(this.studentForm.value);
+    this.resetForm();
+  }
+
+  resetForm() {
     this.studentForm.reset({
       name: '',
       lastname: '',
@@ -92,12 +97,14 @@ export class StudentDetailFormComponent {
     console.log(this.isVisibleParentForm);
   }
 
-  todayFormater(): string{
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-
-    return `${yyyy}-${mm}-${dd}`
+  getClassrooms() {
+    return this.studentFormService.getClassrooms().subscribe((classrooms) =>
+      this._classrooms.set(
+        classrooms.map<ClassroomFormInput>((classroom) => ({
+          id: classroom.id,
+          name: classroom.classroomName,
+        }))
+      )
+    );
   }
 }

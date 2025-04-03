@@ -5,14 +5,6 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 
-// async function sleep() {
-//     return new Promise(resolve => {
-//         setTimeout(() => {
-//             resolve(true)
-//         }, 2500)
-//     });
-// }
-
 export class FormUtils {
   //Expresiones regulares
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
@@ -107,5 +99,14 @@ export class FormUtils {
     const formValue = control.value;
 
     return formValue === 'strider' ? { notStrider: true } : null;
+  }
+
+  static customDateFormater(): string {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+
+    return `${yyyy}-${mm}-${dd}`;
   }
 }

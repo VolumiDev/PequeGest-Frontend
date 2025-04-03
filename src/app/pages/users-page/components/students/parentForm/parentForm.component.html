@@ -1,68 +1,145 @@
 <div class="w-full">
-    <form class="w-full" >
+  <form class="w-full" [formGroup]="parentForm">
+    <div class="flex">
+      <!-- nombre -->
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Nombre</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Nombre padre"
+          formControlName="name"
+        />
+
+        @if(this.formUtils.isValidField(this.parentForm, 'name')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.parentForm, "name") }}
+        </span>
+        }
+      </fieldset>
+      <!-- apellidos -->
+      <fieldset class="fieldset w-full px-2">
+        <legend class="fieldset-legend">Apellidos</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Apellidos padre"
+          formControlName="lastname"
+        />
+
+        @if(this.formUtils.isValidField(this.parentForm, 'lastname')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.parentForm, "lastname") }}
+        </span>
+        }
+        <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+      </fieldset>
+    </div>
+
+    <div class="flex justify-center items-center">
+      <div class="flex flex-col">
+        <!-- nacionalidad -->
+        <fieldset class="fieldset m-3 w-full px-2">
+          <legend class="fieldset-legend">Region</legend>
+          <select class="select" formControlName="region">
+            <option disabled selected>Selecciona un continente</option>
+
+            @for (region of this.countryService.regions; track region) {
+            <option>{{ region }}</option>
+
+            }
+          </select>
+
+          @if(this.formUtils.isValidField(this.parentForm, 'region')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "region") }}
+          </span>
+          }
+        </fieldset>
+
+        <fieldset class="fieldset m-3 w-full px-2">
+          <legend class="fieldset-legend">Nacionalidad</legend>
+          <select class="select" formControlName="country">
+            <option disabled selected>Selecciona un pais</option>
+
+            @for (country of countriesByRegion(); track country.cca3) {
+            <option selected>{{ country.name.common }}</option>
+
+            }
+          </select>
+
+          @if(this.formUtils.isValidField(this.parentForm, 'country')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "country") }}
+          </span>
+          }
+        </fieldset>
+      </div>
+      <!-- dni-nie -->
+      <fieldset class="fieldset w-full px-5">
+        <legend class="fieldset-legend">dni-nie</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Documento"
+          formControlName="id"
+        />
+
+        @if(this.formUtils.isValidField(this.parentForm, 'id')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.parentForm, "id") }}
+        </span>
+        }
+        <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+      </fieldset>
+    </div>
+
+    <div class="flex">
       <div class="flex">
-        <!-- nombre -->
-          <fieldset class="fieldset">
-              <legend class="fieldset-legend">Nombre</legend>
-              <input type="text" class="input" placeholder="Nombre padre" />
-              <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-            </fieldset>
-        <!-- apellidos -->
-        <fieldset class="fieldset w-full">
-          <legend class="fieldset-legend">Apellidos</legend>
-          <input type="text" class="input" placeholder="Apellidos padre" />
+        <!-- telefono -->
+        <fieldset class="fieldset px-2">
+          <legend class="fieldset-legend">Telefono</legend>
+          <input
+            type="text"
+            class="input"
+            placeholder="Telefono"
+            formControlName="telephone"
+          />
+
+          @if(this.formUtils.isValidField(this.parentForm, 'telephone')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "telephone") }}
+          </span>
+          }
+          <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+        </fieldset>
+        <!-- email -->
+        <fieldset class="fieldset w-full px-2">
+          <legend class="fieldset-legend">Email</legend>
+          <input
+            type="text"
+            class="input"
+            placeholder="Correo electrónico"
+            formControlName="email"
+          />
+
+          @if(this.formUtils.isValidField(this.parentForm, 'email')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "email") }}
+          </span>
+          }
           <!-- <p class="fieldset-label">Oblifgatorio</p> -->
         </fieldset>
       </div>
-  
-      <div class="flex">
-        <!-- nacionalidad -->
-        <fieldset class="fieldset w-full">
-          <legend class="fieldset-legend">Nacionalidad</legend>
-          <select class="select">
-            <option disabled selected>Selecciona un pais</option>
-            
-            <!-- <option>nacionalidad</option> -->
-          </select>
-          <!-- <span class="fieldset-label">Obligatorio</span> -->
-        </fieldset>
-        <!-- dni-nie -->
-        <fieldset class="fieldset w-full">
-            <legend class="fieldset-legend">dni-nie</legend>
-            <input type="text" class="input" placeholder="Documento" />
-            <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-          </fieldset>
-      </div>
-  
-      <div class="flex">
-        <div class="flex">
-            <!-- telefono -->
-              <fieldset class="fieldset">
-                  <legend class="fieldset-legend">Telefono</legend>
-                  <input type="text" class="input" placeholder="Telefono" />
-                  <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-                </fieldset>
-            <!-- email -->
-            <fieldset class="fieldset w-full">
-              <legend class="fieldset-legend">Email</legend>
-              <input type="text" class="input" placeholder="Correo electrónico" />
-              <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-            </fieldset>
-          </div>
-        
-      </div>
-  
-      <div class="flex flex-row justify-end">
-  
-        <input type="submit" class="btn btn-accent mx-5" value="Añadir">
-  
-      </div>
-  
-  
-      <!-- @if(isVisibleParentForm){
-        <div class="flex">
-          <app-parent-form/>
-        </div>
-  
-      } -->
-    </form>
+    </div>
+
+    <div class="flex flex-row justify-end">
+      <input
+        type="submit"
+        class="btn btn-accent m-5"
+        value="Añadir"
+        (click)="addParent()"
+      />
+    </div>
+  </form>
+</div>

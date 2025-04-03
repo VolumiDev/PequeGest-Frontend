@@ -43,7 +43,7 @@
           <select class="select" formControlName="region">
             <option disabled selected>Selecciona un continente</option>
 
-            @for (region of this.studentFormServices.regions; track region) {
+            @for (region of this.countryService.regions; track region) {
             <option>{{ region }}</option>
 
             }
@@ -76,9 +76,14 @@
       </div>
 
       <!-- fecha de nacimiento -->
-      <fieldset class="fieldset m-3 w-full px-10">
+      <fieldset class="fieldset m-3 w-full px-3">
         <legend class="fieldset-legend">Fecha de nacimiento</legend>
-        <input type="date" class="input" formControlName="birthdate" [max]="maxDate"/>
+        <input
+          type="date"
+          class="input"
+          formControlName="birthdate"
+          [max]="maxDate"
+        />
 
         @if(this.formUtils.isValidField(this.studentForm, 'birthdate')){
         <span class="fieldset-label text-error">
@@ -113,7 +118,10 @@
         <select class="select" formControlName="classroom">
           <option disabled selected>Selecciona aula</option>
 
-          <!-- <option>Aula</option> -->
+          @for (classroom of classrooms(); track classroom.id) {
+          <option>{{ classroom.name }}</option>
+
+          }
         </select>
 
         @if(this.formUtils.isValidField(this.studentForm, 'classroom')){
