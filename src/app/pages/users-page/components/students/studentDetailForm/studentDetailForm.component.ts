@@ -80,6 +80,7 @@ export class StudentDetailFormComponent implements OnInit {
       name: '',
       lastname: '',
       country: '',
+      region: '',
       birthdate: '',
       alimentation: '',
       classroom: '',
