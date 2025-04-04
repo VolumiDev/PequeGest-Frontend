@@ -21,7 +21,7 @@ export class ParentFormComponent {
   studentFormService = inject(StudentFormService);
 
   countryService = inject(CountryService);
-  countriesByRegion = signal<Country[]>([]);
+  parentCountriesByRegion = signal<Country[]>([]);
 
   formUtils = FormUtils;
 
@@ -35,16 +35,16 @@ export class ParentFormComponent {
     email: ['', [Validators.required]],
   });
 
-  onFormChanged = effect((onCleanUp) => {
-    const regionSubcription = this.countryService.onRegionChange(
-      this.parentForm,
-      this.countriesByRegion
-    );
+  // parentOnFormChanged = effect((onCleanUp) => {
+  //   const regionSubcription = this.countryService.onRegionChange(
+  //     this.parentForm,
+  //     this.parentCountriesByRegion
+  //   );
 
-    onCleanUp(() => {
-      regionSubcription.unsubscribe();
-    });
-  });
+  //   onCleanUp(() => {
+  //     regionSubcription.unsubscribe();
+  //   });
+  // });
 
   addParent() {
     if (this.parentForm.invalid) {
