@@ -32,7 +32,6 @@
           {{ this.formUtils.getFieldError(this.parentForm, "lastname") }}
         </span>
         }
-        <!-- <p class="fieldset-label">Oblifgatorio</p> -->
       </fieldset>
     </div>
 
@@ -135,6 +134,7 @@
 
     <div class="flex flex-row justify-end">
       <input
+        [disabled]="(studentFormService.student()?.parents)!.length >= 2"
         type="submit"
         class="btn btn-accent m-5"
         value="Añadir"

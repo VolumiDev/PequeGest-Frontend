@@ -21,6 +21,7 @@ import { switchMap, tap } from 'rxjs';
 import { Classroom } from '../../../../../interfaces/Classroom.inteface';
 import { StudentFormService } from '../../../../../services/student.services/studentForm.service';
 import { ClassroomFormInput } from '../../../interfaces/classroomFormInput.interface';
+import { Parent } from '../../../../../interfaces/Parent.interface';
 
 @Component({
   selector: 'app-student-detail-form',
@@ -28,7 +29,7 @@ import { ClassroomFormInput } from '../../../interfaces/classroomFormInput.inter
   templateUrl: './studentDetailForm.component.html',
 })
 export class StudentDetailFormComponent implements OnInit {
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   fb = inject(FormBuilder);
   countryService = inject(CountryService);
@@ -36,11 +37,26 @@ export class StudentDetailFormComponent implements OnInit {
 
   formUtils = FormUtils;
 
-  maxDate: string = this.formUtils.customDateFormater();
-  isVisibleParentForm: boolean = false;
   countriesByRegion = signal<Country[]>([]);
+  parentCountriesByRegion = signal<Country[]>([]);
+
   _classrooms = signal<ClassroomFormInput[]>([]);
   classrooms = computed<ClassroomFormInput[]>(() => this._classrooms());
+
+  maxDate: string = this.formUtils.customDateFormater();
+  isVisibleParentForm: boolean = false;
+  parents: Parent[] = [];
+
+
+  parentForm: FormGroup = this.fb.group({
+    parentName: ['', [Validators.required]],
+    paremtLastname: ['', [Validators.required]],
+    parentRegion: ['', [Validators.required]],
+    parentCountry: ['', [Validators.required]],
+    parentId: ['', [Validators.required]],
+    parentTelephone: ['', [Validators.required]],
+    parentEmail: ['', [Validators.required]],
+  });
 
   studentForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
@@ -50,8 +66,11 @@ export class StudentDetailFormComponent implements OnInit {
     birthdate: ['', [Validators.required]],
     alimentation: ['', [Validators.required]],
     classroom: ['', [Validators.required]],
+    parentForm: this.parentForm,
     comments: [''],
   });
+
+
 
   onFormChanged = effect((onCleanUp) => {
     const regionSubcription = this.countryService.onRegionChange(
@@ -63,6 +82,17 @@ export class StudentDetailFormComponent implements OnInit {
     onCleanUp(() => {
       regionSubcription.unsubscribe();
       classroomSubscription.unsubscribe();
+    });
+  });
+
+  parentOnFormChanged = effect((onCleanUp) => {
+    const regionSubcription = this.countryService.onRegionChange(
+      this.parentForm,
+      this.parentCountriesByRegion
+    );
+
+    onCleanUp(() => {
+      regionSubcription.unsubscribe();
     });
   });
 
@@ -107,5 +137,14 @@ export class StudentDetailFormComponent implements OnInit {
         }))
       )
     );
+  }
+
+  addParent() {
+    if (this.parentForm.invalid) {
+      this.parentForm.markAllAsTouched();
+      return;
+    }
+    console.log(this.parentForm.value);
+    this.resetForm();
   }
 }

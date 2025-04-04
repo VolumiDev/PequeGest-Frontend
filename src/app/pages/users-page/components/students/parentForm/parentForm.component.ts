@@ -5,9 +5,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { FormUtils } from '../../../../../utils/FormUtils';
-import { CountryService } from '../../../../../services/country.services/country.service';
 import { Country } from '../../../interfaces/country.interface';
+import { CountryService } from '../../../../../services/country.services/country.service';
+import { FormUtils } from '../../../../../utils/FormUtils';
+import { StudentFormService } from './../../../../../services/student.services/studentForm.service';
 
 @Component({
   selector: 'app-parent-form',
@@ -16,6 +17,8 @@ import { Country } from '../../../interfaces/country.interface';
 })
 export class ParentFormComponent {
   fb = inject(FormBuilder);
+
+  studentFormService = inject(StudentFormService);
 
   countryService = inject(CountryService);
   countriesByRegion = signal<Country[]>([]);
