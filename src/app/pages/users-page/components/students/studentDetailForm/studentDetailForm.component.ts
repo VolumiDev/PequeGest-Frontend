@@ -22,14 +22,15 @@ import { Classroom } from '../../../../../interfaces/Classroom.inteface';
 import { StudentFormService } from '../../../../../services/student.services/studentForm.service';
 import { ClassroomFormInput } from '../../../interfaces/classroomFormInput.interface';
 import { Parent } from '../../../../../interfaces/Parent.interface';
+import { Student } from '../../../../../interfaces/Student.interface';
 
 @Component({
   selector: 'app-student-detail-form',
-  imports: [ParentFormComponent, ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, JsonPipe, ParentFormComponent],
   templateUrl: './studentDetailForm.component.html',
 })
 export class StudentDetailFormComponent implements OnInit {
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   fb = inject(FormBuilder);
   countryService = inject(CountryService);
@@ -47,17 +48,6 @@ export class StudentDetailFormComponent implements OnInit {
   isVisibleParentForm: boolean = false;
   parents: Parent[] = [];
 
-
-  parentForm: FormGroup = this.fb.group({
-    parentName: ['', [Validators.required]],
-    paremtLastname: ['', [Validators.required]],
-    parentRegion: ['', [Validators.required]],
-    parentCountry: ['', [Validators.required]],
-    parentId: ['', [Validators.required]],
-    parentTelephone: ['', [Validators.required]],
-    parentEmail: ['', [Validators.required]],
-  });
-
   studentForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     lastname: ['', [Validators.required]],
@@ -66,11 +56,9 @@ export class StudentDetailFormComponent implements OnInit {
     birthdate: ['', [Validators.required]],
     alimentation: ['', [Validators.required]],
     classroom: ['', [Validators.required]],
-    parentForm: this.parentForm,
     comments: [''],
+    // parents: this.fb.array([], FormUtils.minArrayLengthValidator(1)),
   });
-
-
 
   onFormChanged = effect((onCleanUp) => {
     const regionSubcription = this.countryService.onRegionChange(
@@ -85,23 +73,25 @@ export class StudentDetailFormComponent implements OnInit {
     });
   });
 
-  parentOnFormChanged = effect((onCleanUp) => {
-    const regionSubcription = this.countryService.onRegionChange(
-      this.parentForm,
-      this.parentCountriesByRegion
-    );
-
-    onCleanUp(() => {
-      regionSubcription.unsubscribe();
-    });
-  });
-
   onSubmitStudent() {
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
       return;
     }
-    console.log(this.studentForm.value);
+    const student: Student = {
+      name: this.studentForm.controls['name'].value,
+      lastname: this.studentForm.controls['lastname'].value,
+      country: this.studentForm.controls['country'].value,
+      classroom: this.studentForm.controls['classroom'].value,
+      birthdate: this.studentForm.controls['birthdate'].value,
+      alimentation: this.studentForm.controls['alimentation'].value,
+      comments: this.studentForm.controls['comments'].value,
+      parents: this.studentFormService._parents(),
+    };
+
+    if (student.parents.length === 0) {
+      console.log(this.studentForm.value);
+    }
     this.resetForm();
   }
 
@@ -139,12 +129,9 @@ export class StudentDetailFormComponent implements OnInit {
     );
   }
 
-  addParent() {
-    if (this.parentForm.invalid) {
-      this.parentForm.markAllAsTouched();
-      return;
-    }
-    console.log(this.parentForm.value);
-    this.resetForm();
+  removeParentFromForm(value: string) {
+    this.studentFormService._parents.update((currentParents) =>
+      currentParents.filter((parent) => parent.docid != value)
+    );
   }
 }

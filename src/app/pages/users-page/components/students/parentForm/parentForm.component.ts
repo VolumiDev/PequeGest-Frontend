@@ -21,7 +21,7 @@ export class ParentFormComponent {
   studentFormService = inject(StudentFormService);
 
   countryService = inject(CountryService);
-  parentCountriesByRegion = signal<Country[]>([]);
+  countriesByRegion = signal<Country[]>([]);
 
   formUtils = FormUtils;
 
@@ -30,28 +30,33 @@ export class ParentFormComponent {
     lastname: ['', [Validators.required]],
     region: ['', [Validators.required]],
     country: ['', [Validators.required]],
-    id: ['', [Validators.required]],
+    docid: ['', [Validators.required]],
     telephone: ['', [Validators.required]],
     email: ['', [Validators.required]],
   });
 
-  // parentOnFormChanged = effect((onCleanUp) => {
-  //   const regionSubcription = this.countryService.onRegionChange(
-  //     this.parentForm,
-  //     this.parentCountriesByRegion
-  //   );
+  parentOnFormChanged = effect((onCleanUp) => {
+    const regionSubcription = this.countryService.onRegionChange(
+      this.parentForm,
+      this.countriesByRegion
+    );
 
-  //   onCleanUp(() => {
-  //     regionSubcription.unsubscribe();
-  //   });
-  // });
+    onCleanUp(() => {
+      regionSubcription.unsubscribe();
+    });
+  });
 
   addParent() {
     if (this.parentForm.invalid) {
       this.parentForm.markAllAsTouched();
       return;
     }
-    console.log(this.parentForm.value);
+
+    const parent = this.parentForm.value;
+    this.studentFormService._parents.update((curretnParents) => [
+      ...curretnParents,
+      parent,
+    ]);
     this.resetForm();
   }
 

@@ -3,6 +3,7 @@ import {
   FormArray,
   FormGroup,
   ValidationErrors,
+  ValidatorFn,
 } from '@angular/forms';
 
 export class FormUtils {
@@ -109,4 +110,14 @@ export class FormUtils {
 
     return `${yyyy}-${mm}-${dd}`;
   }
+
+  // static minArrayLengthValidator(min: number): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const value = control.value;
+  //     if (Array.isArray(value) && value.length < min) {
+  //       return { minArraylength: { required: min, actual: value.length } };
+  //     }
+  //     return null;
+  //   };
+  // }
 }

@@ -3,6 +3,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Student } from '../../interfaces/Student.interface';
 import { environment } from '../../../environment/enviroment';
+import { Parent } from '../../interfaces/Parent.interface';
 
 @Injectable({
   providedIn: 'root',

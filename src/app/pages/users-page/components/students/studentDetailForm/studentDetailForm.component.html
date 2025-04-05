@@ -10,7 +10,7 @@
           placeholder="Nombre"
           formControlName="name"
         />
-
+        <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'name')){
         <span class="fieldset-label text-error">
           {{ this.formUtils.getFieldError(this.studentForm, "name") }}
@@ -26,7 +26,7 @@
           placeholder="Introduce apellidos"
           formControlName="lastname"
         />
-
+        <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'lastname')){
         <span class="fieldset-label text-error">
           {{ this.formUtils.getFieldError(this.studentForm, "lastname") }}
@@ -45,17 +45,16 @@
 
             @for (region of this.countryService.regions; track region) {
             <option>{{ region }}</option>
-
             }
           </select>
-
+          <!-- VALIACION DEL ERROR -->
           @if(this.formUtils.isValidField(this.studentForm, 'region')){
           <span class="fieldset-label text-error">
             {{ this.formUtils.getFieldError(this.studentForm, "region") }}
           </span>
           }
         </fieldset>
-
+        <!-- PAIS -->
         <fieldset class="fieldset m-3 w-full">
           <legend class="fieldset-legend">Nacionalidad</legend>
           <select class="select" formControlName="country">
@@ -66,7 +65,7 @@
 
             }
           </select>
-
+          <!-- VALIACION DEL ERROR -->
           @if(this.formUtils.isValidField(this.studentForm, 'country')){
           <span class="fieldset-label text-error">
             {{ this.formUtils.getFieldError(this.studentForm, "country") }}
@@ -84,7 +83,7 @@
           formControlName="birthdate"
           [max]="maxDate"
         />
-
+        <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'birthdate')){
         <span class="fieldset-label text-error">
           {{ this.formUtils.getFieldError(this.studentForm, "birthdate") }}
@@ -102,28 +101,25 @@
           <option>Triturado</option>
           <option>Entero</option>
           <option>Biberón</option>
-
-          <!-- <option>alimentacion</option> -->
         </select>
-
+        <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'alimentation')){
         <span class="fieldset-label text-error">
           {{ this.formUtils.getFieldError(this.studentForm, "alimentation") }}
         </span>
         }
       </fieldset>
-      <!-- fecha de nacimiento -->
+      <!-- AULA -->
       <fieldset class="fieldset m-3 w-full">
         <legend class="fieldset-legend">Aula</legend>
         <select class="select" formControlName="classroom">
           <option disabled selected>Selecciona aula</option>
 
           @for (classroom of classrooms(); track classroom.id) {
-          <option>{{ classroom.name }}</option>
-
+          <option [value]="classroom.id">{{ classroom.name }}</option>
           }
         </select>
-
+        <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'classroom')){
         <span class="fieldset-label text-error">
           {{ this.formUtils.getFieldError(this.studentForm, "classroom") }}
@@ -133,16 +129,11 @@
     </div>
 
     <div class="flex flex-row justify-end">
-      <input
-        type="submit"
-        class="btn btn-accent mx-5"
-        value="Guardar"
-        (click)="onSubmitStudent()"
-      />
-
+      <!-- BOTONES -->
       <button
         class="btn btn-circle btn-warning mx-5"
         (click)="changeParentFormVisibility($event)"
+        [disabled]="studentFormService._parents().length === 2"
       >
         <svg
           width="800px"
@@ -160,158 +151,39 @@
           />
         </svg>
       </button>
+
+      <input
+        type="submit"
+        class="btn btn-accent mx-5"
+        value="Guardar"
+        (click)="onSubmitStudent()"
+      />
     </div>
 
     <!-- FORMULARIO DEL PADRE -->
-
-    @if(isVisibleParentForm){
-    <div class="flex" [formGroup]="this.parentForm">
-      <div class="flex">
-        <!-- nombre -->
-        <fieldset class="fieldset">
-          <legend class="fieldset-legend">Nombre</legend>
-          <input
-            type="text"
-            class="input"
-            placeholder="Nombre padre"
-            formControlName="name"
-          />
-
-          @if(this.formUtils.isValidField(this.parentForm, 'name')){
-          <span class="fieldset-label text-error">
-            {{ this.formUtils.getFieldError(this.parentForm, "name") }}
-          </span>
-          }
-        </fieldset>
-        <!-- apellidos -->
-        <fieldset class="fieldset w-full px-2">
-          <legend class="fieldset-legend">Apellidos</legend>
-          <input
-            type="text"
-            class="input"
-            placeholder="Apellidos padre"
-            formControlName="lastname"
-          />
-
-          @if(this.formUtils.isValidField(this.parentForm, 'lastname')){
-          <span class="fieldset-label text-error">
-            {{ this.formUtils.getFieldError(this.parentForm, "lastname") }}
-          </span>
-          }
-        </fieldset>
-      </div>
-
-      <div class="flex justify-center items-center">
-        <div class="flex flex-col">
-          <!-- nacionalidad -->
-          <fieldset class="fieldset m-3 w-full px-2">
-            <legend class="fieldset-legend">Region</legend>
-            <select class="select" formControlName="region">
-              <option disabled selected>Selecciona un continente</option>
-
-              @for (region of this.countryService.regions; track region) {
-              <option>{{ region }}</option>
-
-              }
-            </select>
-
-            @if(this.formUtils.isValidField(this.parentForm, 'region')){
-            <span class="fieldset-label text-error">
-              {{ this.formUtils.getFieldError(this.parentForm, "region") }}
-            </span>
-            }
-          </fieldset>
-
-          <fieldset class="fieldset m-3 w-full px-2">
-            <legend class="fieldset-legend">Nacionalidad</legend>
-            <select class="select" formControlName="country">
-              <option disabled selected>Selecciona un pais</option>
-
-              @for (country of countriesByRegion(); track country.cca3) {
-              <option selected>{{ country.name.common }}</option>
-
-              }
-            </select>
-
-            @if(this.formUtils.isValidField(this.parentForm, 'country')){
-            <span class="fieldset-label text-error">
-              {{ this.formUtils.getFieldError(this.parentForm, "country") }}
-            </span>
-            }
-          </fieldset>
-        </div>
-        <!-- dni-nie -->
-        <fieldset class="fieldset w-full px-5">
-          <legend class="fieldset-legend">dni-nie</legend>
-          <input
-            type="text"
-            class="input"
-            placeholder="Documento"
-            formControlName="id"
-          />
-
-          @if(this.formUtils.isValidField(this.parentForm, 'id')){
-          <span class="fieldset-label text-error">
-            {{ this.formUtils.getFieldError(this.parentForm, "id") }}
-          </span>
-          }
-          <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-        </fieldset>
-      </div>
-
-      <div class="flex">
-        <div class="flex">
-          <!-- telefono -->
-          <fieldset class="fieldset px-2">
-            <legend class="fieldset-legend">Telefono</legend>
-            <input
-              type="text"
-              class="input"
-              placeholder="Telefono"
-              formControlName="telephone"
-            />
-
-            @if(this.formUtils.isValidField(this.parentForm, 'telephone')){
-            <span class="fieldset-label text-error">
-              {{ this.formUtils.getFieldError(this.parentForm, "telephone") }}
-            </span>
-            }
-            <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-          </fieldset>
-          <!-- email -->
-          <fieldset class="fieldset w-full px-2">
-            <legend class="fieldset-legend">Email</legend>
-            <input
-              type="text"
-              class="input"
-              placeholder="Correo electrónico"
-              formControlName="email"
-            />
-
-            @if(this.formUtils.isValidField(this.parentForm, 'email')){
-            <span class="fieldset-label text-error">
-              {{ this.formUtils.getFieldError(this.parentForm, "email") }}
-            </span>
-            }
-            <!-- <p class="fieldset-label">Oblifgatorio</p> -->
-          </fieldset>
+    <div class="w-full">
+      @for (parent of studentFormService._parents(); track parent.docid) {
+      <div class="flex flex-row bg-accent rounded-2xl m-3 justify-between px-3">
+        <h3 class="m-2 text-accent-content">
+          {{ parent.name }} {{ parent.lastname }}
+        </h3>
+        <h3 class="m-2 text-accent-content">{{ parent.docid }}</h3>
+        <div class="flex justify-between items-center">
+          <i
+            class="fa-solid fa-xmark bg-war transform transition duration-500 hover:scale-200 hover:rotate-180"
+            style="color: #a71b4c"
+            (click)="removeParentFromForm(parent.docid)"
+          ></i>
         </div>
       </div>
-
-      <div class="flex flex-row justify-end">
-        <input
-          [disabled]="(studentFormService.student()?.parents)!.length >= 2"
-          type="submit"
-          class="btn btn-accent m-5"
-          value="Añadir"
-          (click)="addParent()"
-        />
-      </div>
+      }
     </div>
 
-    }
+    @if(isVisibleParentForm){ @if(studentFormService._parents().length != 2){
+    <app-parent-form />
+    } }
 
-    <span>Valid</span>
+    <!-- <span>Valid</span>
     <pre>{{ studentForm.valid | json }}</pre>
     <br />
 
@@ -321,7 +193,7 @@
 
     <span>Errors</span>
     <pre>{{ studentForm.controls["name"].errors | json }}</pre>
-    <br />
+    <br /> -->
 
     <div class="w-full">
       <fieldset class="fieldset">
