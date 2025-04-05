@@ -57,6 +57,7 @@ export class StudentDetailFormComponent implements OnInit {
     alimentation: ['', [Validators.required]],
     classroom: ['', [Validators.required]],
     comments: [''],
+    isFormParentActive: [false],
     // parents: this.fb.array([], FormUtils.minArrayLengthValidator(1)),
   });
 
@@ -105,6 +106,7 @@ export class StudentDetailFormComponent implements OnInit {
       alimentation: '',
       classroom: '',
       comments: '',
+      isFormParentActive: false,
     });
   }
 
