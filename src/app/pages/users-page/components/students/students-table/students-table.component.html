@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (student of students(); track student.hash) {
+      @for (student of studentService.students(); track student.hash) {
       <tr>
         <!-- <th>
               <label>
@@ -43,7 +43,7 @@
           <!-- <br />
               <span class="badge badge-ghost badge-sm">Desktop Support Technician</span> -->
         </td>
-        <td>{{ student.classroom.classroomName }}</td>
+        <td>{{ student.classroomDto.classroomName }}</td>
         <th>
           <button class="btn btn-ghost btn-xs">details</button>
         </th>

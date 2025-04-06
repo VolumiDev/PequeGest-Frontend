@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Classroom } from './../../interfaces/Classroom.inteface';
+import { ClassroomDto } from '../../interfaces/ClassroomDto.inteface';
 import { environment } from '../../../environment/enviroment';
-import { Student } from '../../interfaces/Student.interface';
-import { Parent } from '../../interfaces/Parent.interface';
+import { StudentDto } from '../../interfaces/StudentDto.interface';
+import { ParentDto } from '../../interfaces/ParentDto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -14,10 +14,10 @@ export class StudentFormService {
   private readonly BASE_URL = `${environment.baseUrl}/api/classroom`;
 
   private http = inject(HttpClient);
-  _parents = signal<Parent[]>([]);
-  _student = signal<Student | null>(null);
+  _parents = signal<ParentDto[]>([]);
+  _student = signal<StudentDto | null>(null);
 
-  getClassrooms(): Observable<Classroom[]> {
-    return this.http.get<Classroom[]>(`${this.BASE_URL}`);
+  getClassrooms(): Observable<ClassroomDto[]> {
+    return this.http.get<ClassroomDto[]>(`${this.BASE_URL}`);
   }
 }

@@ -1,6 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { StudentService } from '../../../../../services/student.services/StudentService.service';
-import { Student } from '../../../../../interfaces/Student.interface';
+import { UserStudentTableService } from '../../../../../services/student.services/usersStudentTable.service';
+import { StudentDto } from '../../../../../interfaces/StudentDto.interface';
 import { tap } from 'rxjs';
 
 @Component({
@@ -9,10 +9,10 @@ import { tap } from 'rxjs';
   templateUrl: './students-table.component.html',
 })
 export class StudentsTableComponent implements OnInit {
-  private studentService = inject(StudentService);
+  studentService = inject(UserStudentTableService);
 
-  private _students = signal<Student[]>([]);
-  students = computed<Student[]>(() => this._students());
+  // private _students = signal<Student[]>([]);
+  // students = computed<Student[]>(() => this._students());
 
   studentsLoad() {
     this.studentService
@@ -20,7 +20,7 @@ export class StudentsTableComponent implements OnInit {
       .pipe(
         tap((students) => {
           console.log(students);
-          this._students.set(students);
+          this.studentService._students.set(students);
         })
       )
       .subscribe();

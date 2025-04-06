@@ -1,12 +1,12 @@
-export interface Parent {
-  hash?: null;
-  password?: null;
+export interface ParentDto {
+  hash?: string;
+  password?: string;
   name: string;
   lastname: string;
   country: string;
   docid: string;
   telephone: string;
   email: string;
-  role?: string;
-  description?: null;
+  role: string;
+  description?: string;
 }
