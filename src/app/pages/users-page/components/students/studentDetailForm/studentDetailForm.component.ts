@@ -8,12 +8,13 @@ import {
 } from '@angular/core';
 import { ParentFormComponent } from '../parentForm/parentForm.component';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { FormUtils } from '../../../../../utils/FormUtils';
 import { CountryService } from '../../../../../services/country.services/country.service';
 import { Country } from '../../../interfaces/country.interface';
 import { catchError, map, of, switchMap, take, tap } from 'rxjs';
@@ -22,6 +23,7 @@ import { StudentDto } from '../../../../../interfaces/StudentDto.interface';
 import { UserStudentTableService } from '../../../../../services/student.services/usersStudentTable.service';
 import { ClassroomDto } from '../../../../../interfaces/ClassroomDto.inteface';
 import { ParentDto } from '../../../../../interfaces/ParentDto.interface';
+import { FormUtils } from '../../../../../utils/FormUtils';
 
 @Component({
   selector: 'app-student-detail-form',
@@ -29,7 +31,7 @@ import { ParentDto } from '../../../../../interfaces/ParentDto.interface';
   templateUrl: './studentDetailForm.component.html',
 })
 export class StudentDetailFormComponent implements OnInit {
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   fb = inject(FormBuilder);
   countryService = inject(CountryService);
@@ -49,16 +51,15 @@ export class StudentDetailFormComponent implements OnInit {
   isVisibleParentForm: boolean = false;
   parents: ParentDto[] = [];
 
-  //TODO AÑADIR LOS VALIDADORES A CADA UNO DE LOS CAMPOS
   studentForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required]],
-    lastname: ['', [Validators.required]],
+    name: ['', [Validators.required, Validators.pattern(FormUtils.notOnlySpacesPattern)]],
+    lastname: ['', [Validators.required, Validators.pattern(FormUtils.notOnlySpacesPattern)]],
     region: ['', Validators.required],
     country: ['', Validators.required],
-    birthdate: ['', [Validators.required]],
+    birthdate: ['', [Validators.required, this.birthdateValidator]],
     alimentation: ['', [Validators.required]],
     classroom: ['', [Validators.required]],
-    comments: [''],
+    comments: ['', [Validators.pattern(FormUtils.notOnlySpacesPattern)]],
     doubleAuthorization: [false],
     isFormParentActive: [false],
     // parents: this.fb.array([], FormUtils.minArrayLengthValidator(1)),
@@ -161,5 +162,22 @@ export class StudentDetailFormComponent implements OnInit {
     this.studentFormService._parents.update((currentParents) =>
       currentParents.filter((parent) => parent.docid != value)
     );
+  }
+
+  // TODO este metodo lo tenemos que meter en el Utils, no se porque me da erro
+  birthdateValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null; // No se realiza la validación si el campo está vacío, se asume que Validators.required se encarga de ello.
+    }
+
+    const inputDate = new Date(control.value);
+    const currentDate = new Date();
+
+    // Se compara solo la parte de la fecha (sin horas) si es necesario.
+    if (inputDate >= currentDate) {
+      return { futureDate: 'La fecha debe ser anterior a la fecha actual' };
+    }
+
+    return null;
   }
 }
