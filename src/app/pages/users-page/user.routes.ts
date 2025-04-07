@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { UsersPageComponent } from './users-page.component';
+import { StudentDashboardComponent } from './components/students/studentsDashboard/studentDashboard.component';
 
 export const routes: Routes = [
   {
@@ -8,13 +9,14 @@ export const routes: Routes = [
     children: [
       {
         path: 'students',
-        loadComponent: () => 
-          import('./components/students/studentsDataDetails/studentsDataDetails.component').then((c) => c.StudentsDataDetailsComponent),
+        component: StudentDashboardComponent,
+        loadChildren: () =>
+          import('./components/students/studentsDashboard/students.routes').then((m) => m.routes)
       },
       {
         path: 'educators',
-        loadComponent: () => 
-            import('./components/educators-table/educators-table.component').then((c) => c.EducatorsTableComponent),
+        loadComponent: () =>
+          import('./components/educators-table/educators-table.component').then((c) => c.EducatorsTableComponent),
       },
       {
         path: '**',

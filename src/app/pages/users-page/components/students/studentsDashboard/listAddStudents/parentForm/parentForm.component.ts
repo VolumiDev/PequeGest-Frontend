@@ -5,10 +5,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Country } from '../../../interfaces/country.interface';
-import { CountryService } from '../../../../../services/country.services/country.service';
-import { FormUtils } from '../../../../../utils/FormUtils';
-import { StudentFormService } from './../../../../../services/student.services/studentForm.service';
+import { StudentFormService } from '../../../../../../../services/student.services/studentForm.service';
+import { CountryService } from '../../../../../../../services/country.services/country.service';
+import { Country } from '../../../../../interfaces/country.interface';
+import { FormUtils } from '../../../../../../../utils/FormUtils';
 
 @Component({
   selector: 'app-parent-form',

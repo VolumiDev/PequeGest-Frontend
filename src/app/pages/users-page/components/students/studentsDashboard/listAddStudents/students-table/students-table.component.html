@@ -45,7 +45,9 @@
         </td>
         <td>{{ student.classroomDto.classroomName }}</td>
         <th>
-          <button class="btn btn-ghost btn-xs">details</button>
+          <a class="btn btn-secondary" [routerLink]="[student.hash]"
+            >Detalles</a
+          >
         </th>
       </tr>
       }

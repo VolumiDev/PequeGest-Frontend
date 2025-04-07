@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { TopMenuComponent } from "./shared/top-menu/top-menu.component";
 import { RouterOutlet } from '@angular/router';
-import { StudentsDataDetailsComponent } from './components/students/studentsDataDetails/studentsDataDetails.component';
+import { StudentDashboardComponent } from './components/students/studentsDashboard/studentDashboard.component';
 
 @Component({
   selector: 'app-users-page',
@@ -10,6 +10,6 @@ import { StudentsDataDetailsComponent } from './components/students/studentsData
     RouterOutlet,
   ],
   templateUrl: './users-page.component.html',
-  
+
 })
 export class UsersPageComponent { }

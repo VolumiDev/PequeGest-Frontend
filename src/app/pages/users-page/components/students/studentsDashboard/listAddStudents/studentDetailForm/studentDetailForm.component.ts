@@ -6,7 +6,6 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { ParentFormComponent } from '../parentForm/parentForm.component';
 import {
   AbstractControl,
   FormBuilder,
@@ -15,19 +14,24 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { CountryService } from '../../../../../services/country.services/country.service';
-import { Country } from '../../../interfaces/country.interface';
-import { catchError, map, of, switchMap, take, tap } from 'rxjs';
-import { StudentFormService } from '../../../../../services/student.services/studentForm.service';
-import { StudentDto } from '../../../../../interfaces/StudentDto.interface';
-import { UserStudentTableService } from '../../../../../services/student.services/usersStudentTable.service';
-import { ClassroomDto } from '../../../../../interfaces/ClassroomDto.inteface';
-import { ParentDto } from '../../../../../interfaces/ParentDto.interface';
-import { FormUtils } from '../../../../../utils/FormUtils';
+import { CountryService } from '../../../../../../../services/country.services/country.service';
+import { StudentFormService } from '../../../../../../../services/student.services/studentForm.service';
+import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
+import { FormUtils } from '../../../../../../../utils/FormUtils';
+import { Country } from '../../../../../interfaces/country.interface';
+import { ClassroomDto } from '../../../../../../../interfaces/ClassroomDto.inteface';
+import { ParentDto } from '../../../../../../../interfaces/ParentDto.interface';
+import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
+import { catchError, map, of, take } from 'rxjs';
+import { ParentFormComponent } from '../parentForm/parentForm.component';
+
 
 @Component({
   selector: 'app-student-detail-form',
-  imports: [ReactiveFormsModule, ParentFormComponent],
+  imports: [
+    ReactiveFormsModule,
+    ParentFormComponent
+  ],
   templateUrl: './studentDetailForm.component.html',
 })
 export class StudentDetailFormComponent implements OnInit {

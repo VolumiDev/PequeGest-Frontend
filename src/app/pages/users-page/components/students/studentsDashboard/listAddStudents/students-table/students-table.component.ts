@@ -1,11 +1,13 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { UserStudentTableService } from '../../../../../services/student.services/usersStudentTable.service';
-import { StudentDto } from '../../../../../interfaces/StudentDto.interface';
+import { Component, inject, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
+import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-students-table',
-  imports: [],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './students-table.component.html',
 })
 export class StudentsTableComponent implements OnInit {
