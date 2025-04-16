@@ -5,7 +5,7 @@ import { NotAutheticatedGuard } from './auth/guards/not-authenticated.guard';
 export const routes: Routes = [
   {
     path: 'auth',
-    loadChildren: () => 
+    loadChildren: () =>
       import('./auth/auth.routes'),
     canMatch: [
       NotAutheticatedGuard,
@@ -13,9 +13,9 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren:() => 
-      import('./pages/main.routes').then((m) => m.routes),
-      //TODO PONER EL GUARD A LAS RUTAS PARA QUE SOLO TENGAN ACCESO LOS USUARIOS CON TOKEN
+    loadChildren: () =>
+      import('./routes/main.routes').then((m) => m.routes),
+    //TODO PONER EL GUARD A LAS RUTAS PARA QUE SOLO TENGAN ACCESO LOS USUARIOS CON TOKEN
   },
   {
     path: '**',

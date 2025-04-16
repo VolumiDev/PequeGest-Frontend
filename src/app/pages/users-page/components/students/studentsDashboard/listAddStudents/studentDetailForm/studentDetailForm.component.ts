@@ -60,7 +60,7 @@ export class StudentDetailFormComponent implements OnInit {
     lastname: ['', [Validators.required]],
     region: ['', Validators.required],
     country: ['', Validators.required],
-    birthdate: ['', [Validators.required, this.birthdateValidator]],
+    birthdate: ['', [Validators.required, FormUtils.birthdateValidator]],
     alimentation: ['', [Validators.required]],
     classroom: ['', [Validators.required]],
     comments: ['', [Validators.pattern(FormUtils.notOnlySpacesPattern)]],
@@ -166,20 +166,4 @@ export class StudentDetailFormComponent implements OnInit {
     );
   }
 
-  // TODO este metodo lo tenemos que meter en el Utils, no se porque me da erro
-  birthdateValidator(control: AbstractControl): ValidationErrors | null {
-    if (!control.value) {
-      return null; // No se realiza la validación si el campo está vacío, se asume que Validators.required se encarga de ello.
-    }
-
-    const inputDate = new Date(control.value);
-    const currentDate = new Date();
-
-    // Se compara solo la parte de la fecha (sin horas) si es necesario.
-    if (inputDate >= currentDate) {
-      return { futureDate: 'La fecha debe ser anterior a la fecha actual' };
-    }
-
-    return null;
-  }
 }

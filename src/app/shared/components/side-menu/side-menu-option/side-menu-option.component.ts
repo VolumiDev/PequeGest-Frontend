@@ -1,14 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-
-
-interface MenuOption {
-  label: string;
-  sublabel: string;
-  route: string;
-  icon: string;
-}
-
+import { MenuOption } from '../../../../interfaces/MenuOption';
 
 @Component({
   selector: 'app-side-menu-option',
@@ -17,11 +9,6 @@ interface MenuOption {
     RouterLinkActive,
   ],
   templateUrl: './side-menu-option.component.html',
-  styles: `
-    :host {
-      display: block;
-    }
-  `,
 })
 export class SideMenuOptionComponent {
 
@@ -30,20 +17,20 @@ export class SideMenuOptionComponent {
       icon: 'fa-solid fa-users',
       label: 'Usuarios',
       sublabel: 'Gestión de usuarios',
-      route:'/home/users'
+      route: '/home/users'
     },
     {
       icon: 'fa-solid fa-school',
       label: 'Aulas',
       sublabel: 'Gestión de aulas',
-      route:'/home/classrooms'
+      route: '/home/classrooms'
     },
     {
       icon: 'fa-solid fa-envelope',
       label: 'Mensajes',
       sublabel: 'Mensajería directa',
-      route:'/home/messages'
+      route: '/home/messages'
     },
   ]
 
- }
+}

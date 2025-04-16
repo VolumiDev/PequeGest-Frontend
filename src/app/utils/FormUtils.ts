@@ -8,7 +8,6 @@ import {
 
 export class FormUtils {
   //Expresiones regulares
-  static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   // prettier-ignore
   static notOnlySpacesPattern = '^(?!\s*$)[A-Za-z0-9\s]+$';
@@ -19,18 +18,24 @@ export class FormUtils {
         case 'required':
           return 'Este campo es requerido';
 
+        case 'futureDate':
+          return 'La fecha debe ser anterior a la fecha actual';
+
         case 'minlength':
           return `Minimo de ${errors['minlength'].requiredLength} caracteres`;
 
         case 'notStrider':
           return `No puede usar ese nombre`;
+
         case 'emailTaken':
           return `El correo electrónico ya esta siendo usado por otro usuario`;
-        case 'min':
-          return `Valor minimo de ${errors['min'].min}`;
+
         case 'pattern':
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
             return 'El valor ingresado no parece un correo electrónico';
+          }
+          if (errors['pattern'].requiredPattern === FormUtils.notOnlySpacesPattern) {
+            return 'No introduzca espacios en blanco únicamente';
           }
           return 'Error de patrón contra expresión regular';
         default:
@@ -54,54 +59,6 @@ export class FormUtils {
     return this.getTextError(errors);
   }
 
-  static isValidFieldInArray(formArray: FormArray, index: number) {
-    return (
-      formArray.controls[index].errors && formArray.controls[index].touched
-    );
-  }
-
-  static getFieldErrorInArray(
-    formArray: FormArray,
-    index: number
-  ): string | null {
-    if (formArray.controls.length === 0) return null;
-
-    const errors = formArray.controls[index].errors ?? {};
-
-    return this.getTextError(errors);
-  }
-
-  static isFieldOneEqualsFieldTwo(field1: string, field2: string) {
-    return (formGroup: AbstractControl) => {
-      const field1Value = formGroup.get(field1)?.value;
-      const field2Value = formGroup.get(field2)?.value;
-
-      return field1Value === field2Value ? null : { passwordsNotEquals: true };
-    };
-  }
-
-  static async checkingServerResponse(
-    control: AbstractControl
-  ): Promise<ValidationErrors | null> {
-    console.log('Validando contra el servidor');
-
-    // await sleep();
-
-    const formValue = control.value;
-
-    if (formValue === 'hola@mundo.com') {
-      return {
-        emailTaken: true,
-      };
-    }
-    return null;
-  }
-
-  static notStrider(control: AbstractControl): ValidationErrors | null {
-    const formValue = control.value;
-
-    return formValue === 'strider' ? { notStrider: true } : null;
-  }
 
   static customDateFormater(): string {
     const today = new Date();
@@ -110,6 +67,22 @@ export class FormUtils {
     const dd = String(today.getDate()).padStart(2, '0');
 
     return `${yyyy}-${mm}-${dd}`;
+  }
+
+  static birthdateValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null; // No se realiza la validación si el campo está vacío, se asume que Validators.required se encarga de ello.
+    }
+
+    const inputDate = new Date(control.value);
+    const currentDate = new Date();
+
+    // Se compara solo la parte de la fecha (sin horas) si es necesario.
+    if (inputDate >= currentDate) {
+      return { futureDate: 'La fecha debe ser anterior a la fecha actual' };
+    }
+
+    return null;
   }
 
   // static minArrayLengthValidator(min: number): ValidatorFn {

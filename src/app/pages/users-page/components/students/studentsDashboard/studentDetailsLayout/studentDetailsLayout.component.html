@@ -1,1 +1,8 @@
-<p>studentDetailsLayout works!</p>,
+<div class="flex h-dvh w-full bg-secondary rounded-md p-3 gap-2">
+  <div class="flex flex-col w-1/6 bg-accent">
+    <app-student-details-side-menu-options />
+  </div>
+  <div class="bg-accent-content grow p-3">
+    <router-outlet />
+  </div>
+</div>
