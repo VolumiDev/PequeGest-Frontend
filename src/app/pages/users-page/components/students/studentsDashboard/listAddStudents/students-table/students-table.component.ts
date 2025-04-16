@@ -1,7 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { tap } from 'rxjs';
-import { UploadFileComponent } from '../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
-import { DocumentsService } from '../../../../../services/documents/documents.service';
+import { UploadFileComponent } from '../../../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
+import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
+import { DocumentsService } from '../../../../../../../services/documents/documents.service';
+import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
 
 @Component({
   selector: 'app-students-table',
