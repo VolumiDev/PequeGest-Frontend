@@ -26,13 +26,16 @@ export class ParentFormComponent {
   formUtils = FormUtils;
 
   parentForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(FormUtils.notOnlySpacesPattern)]],
-    lastname: ['', [Validators.required, Validators.pattern(FormUtils.notOnlySpacesPattern)]],
+    name: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
     region: ['', [Validators.required]],
     country: ['', [Validators.required]],
     docid: ['', [Validators.required]],
     telephone: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.pattern(FormUtils.emailPattern)]],
+    email: [
+      '',
+      [Validators.required, Validators.pattern(FormUtils.emailPattern)],
+    ],
   });
 
   parentOnFormChanged = effect((onCleanUp) => {

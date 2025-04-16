@@ -31,7 +31,7 @@ import { FormUtils } from '../../../../../utils/FormUtils';
   templateUrl: './studentDetailForm.component.html',
 })
 export class StudentDetailFormComponent implements OnInit {
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   fb = inject(FormBuilder);
   countryService = inject(CountryService);
@@ -52,8 +52,8 @@ export class StudentDetailFormComponent implements OnInit {
   parents: ParentDto[] = [];
 
   studentForm: FormGroup = this.fb.group({
-    name: ['', [Validators.required, Validators.pattern(FormUtils.notOnlySpacesPattern)]],
-    lastname: ['', [Validators.required, Validators.pattern(FormUtils.notOnlySpacesPattern)]],
+    name: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
     region: ['', Validators.required],
     country: ['', Validators.required],
     birthdate: ['', [Validators.required, this.birthdateValidator]],
@@ -110,7 +110,6 @@ export class StudentDetailFormComponent implements OnInit {
       student,
     ]);
 
-    console.log(student);
     this.usersStudentTableService
       .saveStudent(student)
       .pipe(
@@ -122,8 +121,7 @@ export class StudentDetailFormComponent implements OnInit {
       )
       .subscribe();
 
-    //TODO poner de nuevo el reseteo de campos
-    // this.resetForm();
+    this.resetForm();
   }
 
   resetForm() {
