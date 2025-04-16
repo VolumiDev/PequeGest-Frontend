@@ -4,10 +4,11 @@ import { UploadFileComponent } from '../../../../../../../shared/components/side
 import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
 import { DocumentsService } from '../../../../../../../services/documents/documents.service';
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-students-table',
-  imports: [UploadFileComponent],
+  imports: [UploadFileComponent, RouterLink],
   templateUrl: './students-table.component.html',
 })
 export class StudentsTableComponent implements OnInit {

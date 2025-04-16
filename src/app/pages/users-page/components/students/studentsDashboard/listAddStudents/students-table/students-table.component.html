@@ -56,7 +56,9 @@
         </td>
         <td>{{ student.classroomDto.classroomName }}</td>
         <th>
-          <button class="btn btn-accent btn-xs mx-2">details</button>
+          <a class="btn btn-secondary" [routerLink]="[student.hash]"
+            >Detalles</a
+          >
           <button
             class="mx-2 btn btn-accent"
             onclick="uploadFile.showModal()"
