@@ -10,7 +10,8 @@ export class FormUtils {
   //Expresiones regulares
   static namePattern = '([a-zA-Z]+) ([a-zA-Z]+)';
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-  static notOnlySpacesPattern = '^[a-zA-Z0-9]+$';
+  // prettier-ignore
+  static notOnlySpacesPattern = '^(?!\s*$)[A-Za-z0-9\s]+$';
 
   static getTextError(errors: ValidationErrors): string | null {
     for (const key of Object.keys(errors)) {

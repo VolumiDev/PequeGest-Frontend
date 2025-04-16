@@ -1,20 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { tap } from 'rxjs';
-import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
-import { RouterLink } from '@angular/router';
+import { UploadFileComponent } from '../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
+import { DocumentsService } from '../../../../../services/documents/documents.service';
 
 @Component({
   selector: 'app-students-table',
-  imports: [
-    RouterLink
-  ],
+  imports: [UploadFileComponent],
   templateUrl: './students-table.component.html',
 })
 export class StudentsTableComponent implements OnInit {
   studentService = inject(UserStudentTableService);
+  documentService = inject(DocumentsService);
 
-  // private _students = signal<Student[]>([]);
-  // students = computed<Student[]>(() => this._students());
+  private _studentSelected = signal<StudentDto | null>(null);
+  studentSelected = computed(() => this._studentSelected());
+
+  studentSelection(student: StudentDto) {
+    this.documentService.studentSelected.set(student);
+  }
 
   studentsLoad() {
     this.studentService
