@@ -28,8 +28,8 @@ export class ParentFormComponent {
   parentForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     lastname: ['', [Validators.required]],
-    region: ['', [Validators.required]],
-    country: ['', [Validators.required]],
+    region: [null, [Validators.required]],
+    country: [null, [Validators.required]],
     docid: ['', [Validators.required]],
     telephone: ['', [Validators.required]],
     email: [

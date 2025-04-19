@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { StudentDetailFormComponent } from '../../listAddStudents/studentDetailForm/studentDetailForm.component';
+import { FormUtils } from '../../../../../../../utils/FormUtils';
+import { StudentProfileDataComponent } from './studentProfileData/studentProfileData.component';
 
 @Component({
   selector: 'app-student-profile',
-  imports: [],
+  imports: [StudentProfileDataComponent],
   templateUrl: './studentProfile.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentProfileComponent { }
+export class StudentProfileComponent {}

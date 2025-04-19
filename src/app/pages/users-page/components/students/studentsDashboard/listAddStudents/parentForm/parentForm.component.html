@@ -41,7 +41,7 @@
         <fieldset class="fieldset m-3 w-full px-2">
           <legend class="fieldset-legend">Region</legend>
           <select class="select" formControlName="region">
-            <option disabled selected>Selecciona un continente</option>
+            <option disabled [value]="null">Selecciona un continente</option>
 
             @for (region of this.countryService.regions; track region) {
             <option>{{ region }}</option>
@@ -58,7 +58,7 @@
         <fieldset class="fieldset m-3 w-full px-2">
           <legend class="fieldset-legend">Nacionalidad</legend>
           <select class="select" formControlName="country">
-            <option disabled selected>Selecciona un pais</option>
+            <option disabled [value]="null">Selecciona un pais</option>
 
             @for (country of countriesByRegion(); track country.cca3) {
             <option selected>{{ country.name.common }}</option>

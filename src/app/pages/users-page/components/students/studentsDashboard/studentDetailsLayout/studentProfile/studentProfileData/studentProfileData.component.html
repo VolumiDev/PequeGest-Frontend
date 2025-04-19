@@ -1,0 +1,178 @@
+<div class="w-full">
+  <form class="w-full" [formGroup]="this.studentForm">
+    <div class="flex w-full justify-around">
+      <!-- nombre -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Nombre</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Nombre"
+          formControlName="name"
+        />
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'name')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "name") }}
+        </span>
+        }
+      </fieldset>
+      <!-- apellidos -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Apellidos</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Introduce apellidos"
+          formControlName="lastname"
+        />
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'lastname')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "lastname") }}
+        </span>
+        }
+      </fieldset>
+    </div>
+
+    <div class="flex w-full justify-around">
+      <!-- nacionalidad -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Region</legend>
+        <select class="select" formControlName="region">
+          <option [value]="null" disabled>Selecciona un continente</option>
+
+          @for (region of this.countryService.regions; track region) {
+          <option>{{ region }}</option>
+          }
+        </select>
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'region')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "region") }}
+        </span>
+        }
+      </fieldset>
+      <!-- PAIS -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Nacionalidad</legend>
+        <select class="select" formControlName="country">
+          <option [value]="null" disabled>Selecciona un pais</option>
+
+          @for (country of countriesByRegion(); track country.cca3) {
+          <option selected>{{ country.name.common }}</option>
+
+          }
+        </select>
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'country')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "country") }}
+        </span>
+        }
+      </fieldset>
+    </div>
+
+    <div class="flex justify-around">
+      <!-- fecha de nacimiento -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Fecha de nacimiento</legend>
+        <input
+          type="date"
+          class="input"
+          formControlName="birthdate"
+          [max]="maxDate"
+        />
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'birthdate')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "birthdate") }}
+        </span>
+        }
+      </fieldset>
+
+      <!-- doble autorizacion -->
+      <div class="flex flex-col m-1 p-1 justify-center w-2/5">
+        <legend class="fieldset-legend text-xs">Envio de documentación</legend>
+        <fieldset
+          class="fieldset p-1 bg-base-100 border border-base-200 rounded-lg w-64"
+        >
+          <label class="fieldset-label">
+            <input
+              type="checkbox"
+              class="toggle"
+              formControlName="doubleAuthorization"
+            />
+            Doble autorización parental.
+          </label>
+        </fieldset>
+      </div>
+    </div>
+
+    <div class="flex w-full justify-around">
+      <!-- alimentacion -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Tipo de alimentación</legend>
+        <select class="select" formControlName="alimentation">
+          <option disabled [value]="null">Selecciona un alimentación</option>
+          <option>Triturado</option>
+          <option>Entero</option>
+          <option>Biberón</option>
+        </select>
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'alimentation')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "alimentation") }}
+        </span>
+        }
+      </fieldset>
+      <!-- AULA -->
+      <fieldset class="fieldset m-1 p-1 w-2/5">
+        <legend class="fieldset-legend">Aula</legend>
+        <select class="select" formControlName="classroom">
+          <option [value]="null" disabled selected>Selecciona aula</option>
+
+          @for (classroom of classrooms(); track classroom.id) {
+          <option [ngValue]="classroom">{{ classroom.classroomName }}</option>
+          }
+        </select>
+
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.studentForm, 'classroom')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.studentForm, "classroom") }}
+        </span>
+        }
+      </fieldset>
+    </div>
+
+    <div class="flex w-full justify-center">
+      <fieldset class="fieldset w-3/5">
+        <legend class="fieldset-legend">Comentarios</legend>
+        <textarea
+          class="textarea h-24 w-full"
+          placeholder="Bio"
+          formControlName="comments"
+        ></textarea>
+        <!-- <div class="fieldset-label">Optional</div> -->
+      </fieldset>
+    </div>
+
+    <!-- BOTONES -->
+    <div class="flex flex-row justify-end my-3">
+      <input
+        type="submit"
+        class="btn btn-accent mx-5"
+        value="Guardar"
+        (click)="updateStudentData()"
+      />
+    </div>
+
+    <!-- VALIDACION DE FORMATO INCORRECTO ANTES DE HACER EL ENVIO DEL ESTUDIANTE -->
+    @if (formHasError){
+    <div class="bg-error text-error-content rounded-xl p-1 text-center">
+      <p>Revise los campos</p>
+    </div>
+    }
+  </form>
+</div>

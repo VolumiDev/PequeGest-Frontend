@@ -25,13 +25,9 @@ import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface
 import { catchError, map, of, take } from 'rxjs';
 import { ParentFormComponent } from '../parentForm/parentForm.component';
 
-
 @Component({
   selector: 'app-student-detail-form',
-  imports: [
-    ReactiveFormsModule,
-    ParentFormComponent
-  ],
+  imports: [ReactiveFormsModule, ParentFormComponent],
   templateUrl: './studentDetailForm.component.html',
 })
 export class StudentDetailFormComponent implements OnInit {
@@ -58,15 +54,14 @@ export class StudentDetailFormComponent implements OnInit {
   studentForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     lastname: ['', [Validators.required]],
-    region: ['', Validators.required],
-    country: ['', Validators.required],
+    region: [null, Validators.required],
+    country: [null, Validators.required],
     birthdate: ['', [Validators.required, FormUtils.birthdateValidator]],
-    alimentation: ['', [Validators.required]],
-    classroom: ['', [Validators.required]],
+    alimentation: [null, [Validators.required]],
+    classroom: [null, [Validators.required]],
     comments: ['', [Validators.pattern(FormUtils.notOnlySpacesPattern)]],
     doubleAuthorization: [false],
     isFormParentActive: [false],
-    // parents: this.fb.array([], FormUtils.minArrayLengthValidator(1)),
   });
 
   onFormChanged = effect((onCleanUp) => {
@@ -165,5 +160,4 @@ export class StudentDetailFormComponent implements OnInit {
       currentParents.filter((parent) => parent.docid != value)
     );
   }
-
 }
