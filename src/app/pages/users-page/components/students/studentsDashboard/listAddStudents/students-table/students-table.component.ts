@@ -37,4 +37,9 @@ export class StudentsTableComponent implements OnInit {
   ngOnInit(): void {
     this.studentsLoad();
   }
+
+  setDefaultImage(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.src = 'default-avatar.png';
+  }
 }

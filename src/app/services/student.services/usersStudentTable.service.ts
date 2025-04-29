@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, Signal, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StudentDto } from '../../interfaces/StudentDto.interface';
 import { environment } from '../../../environment/enviroment';
@@ -14,8 +14,18 @@ export class UserStudentTableService {
   _students = signal<StudentDto[]>([]);
   students = computed<StudentDto[]>(() => this._students());
 
+  private studentByHash = signal<StudentDto | null>(null);
+
+  getStudentByHash() {
+    return this.studentByHash;
+  }
+
   getAllStudents(): Observable<StudentDto[]> {
     return this.http.get<StudentDto[]>(`${this.BASE_URL}/all`);
+  }
+
+  fetchStudentByHash(hash: string): Observable<StudentDto> {
+    return this.http.get<StudentDto>(`${this.BASE_URL}/${hash}`);
   }
 
   saveStudent(student: StudentDto): Observable<StudentDto> {

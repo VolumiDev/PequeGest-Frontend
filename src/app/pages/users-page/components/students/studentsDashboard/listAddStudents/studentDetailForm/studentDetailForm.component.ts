@@ -22,7 +22,7 @@ import { Country } from '../../../../../interfaces/country.interface';
 import { ClassroomDto } from '../../../../../../../interfaces/ClassroomDto.inteface';
 import { ParentDto } from '../../../../../../../interfaces/ParentDto.interface';
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
-import { catchError, map, of, take } from 'rxjs';
+import { catchError, map, of, take, tap } from 'rxjs';
 import { ParentFormComponent } from '../parentForm/parentForm.component';
 
 @Component({
@@ -95,6 +95,7 @@ export class StudentDetailFormComponent implements OnInit {
       name: this.studentForm.controls['name'].value,
       lastname: this.studentForm.controls['lastname'].value,
       country: this.studentForm.controls['country'].value,
+      region: this.studentForm.controls['region'].value,
       classroomDto: this.studentForm.controls['classroom'].value,
       birthdate: this.studentForm.controls['birthdate'].value,
       alimentation: this.studentForm.controls['alimentation'].value,
@@ -109,9 +110,12 @@ export class StudentDetailFormComponent implements OnInit {
       student,
     ]);
 
+    console.log('debger de guardar student', student);
+
     this.usersStudentTableService
       .saveStudent(student)
       .pipe(
+        tap((student) => console.log('debger de guardar student', student)),
         take(1),
         catchError((error) => {
           console.log(`Ocurrio un error: ${error}`);
@@ -120,7 +124,8 @@ export class StudentDetailFormComponent implements OnInit {
       )
       .subscribe();
 
-    this.resetForm();
+    //TODO
+    //this.resetForm();
   }
 
   resetForm() {

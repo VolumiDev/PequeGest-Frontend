@@ -1,4 +1,12 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  Input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormUtils } from '../../../../../../../../utils/FormUtils';
 import {
   FormBuilder,
@@ -10,7 +18,11 @@ import { CountryService } from '../../../../../../../../services/country.service
 import { Country } from '../../../../../../interfaces/country.interface';
 import { ClassroomDto } from '../../../../../../../../interfaces/ClassroomDto.inteface';
 import { StudentFormService } from '../../../../../../../../services/student.services/studentForm.service';
-import { map } from 'rxjs';
+import { map, take, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { UserStudentTableService } from '../../../../../../../../services/student.services/usersStudentTable.service';
+import { StudentDto } from '../../../../../../../../interfaces/StudentDto.interface';
+import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-student-profile-data',
@@ -18,11 +30,25 @@ import { map } from 'rxjs';
   templateUrl: './studentProfileData.component.html',
 })
 export class StudentProfileDataComponent {
-  fb = inject(FormBuilder);
-  countryService = inject(CountryService);
-  studentFormService = inject(StudentFormService);
+  private studentFormService = inject(StudentFormService);
+  private studenService = inject(UserStudentTableService);
+  private fb = inject(FormBuilder);
+  private destroyRef = takeUntilDestroyed();
 
+  countryService = inject(CountryService);
   formUtils = FormUtils;
+
+  constructor() {
+    const studentSignal = this.studenService.getStudentByHash();
+
+    toObservable(studentSignal)
+      .pipe(this.destroyRef)
+      .subscribe((student) => {
+        if (student) {
+          this.studentForm.patchValue(student);
+        }
+      });
+  }
 
   countriesByRegion = signal<Country[]>([]);
   _classrooms = signal<ClassroomDto[]>([]);
@@ -34,14 +60,13 @@ export class StudentProfileDataComponent {
   studentForm: FormGroup = this.fb.group({
     name: ['', [Validators.required]],
     lastname: ['', [Validators.required]],
-    region: [null, Validators.required],
-    country: [null, Validators.required],
+    region: ['', Validators.required],
+    country: ['', Validators.required],
     birthdate: ['', [Validators.required, FormUtils.birthdateValidator]],
-    alimentation: [null, [Validators.required]],
-    classroom: [null, [Validators.required]],
+    alimentation: ['', [Validators.required]],
+    classroom: ['', [Validators.required]],
     comments: ['', [Validators.pattern(FormUtils.notOnlySpacesPattern)]],
-    doubleAuthorization: [false],
-    isFormParentActive: [false],
+    doubleAuthorization: [''],
   });
 
   onFormChanged = effect((onCleanUp) => {
@@ -67,4 +92,17 @@ export class StudentProfileDataComponent {
   updateStudentData() {
     throw new Error('Method not implemented.');
   }
+
+  // getStudentData(hash: string) {
+  //   this.userStudentTableService
+  //     .getStudentByHash(hash)
+  //     .pipe(
+  //       take(1),
+  //       tap((student) => this.student.set(student)),
+  //       tap((std) => this.studentForm.patchValue(this.student()!))
+  //     )
+  //     .subscribe();
+
+  //   console.log(this.student());
+  // }
 }

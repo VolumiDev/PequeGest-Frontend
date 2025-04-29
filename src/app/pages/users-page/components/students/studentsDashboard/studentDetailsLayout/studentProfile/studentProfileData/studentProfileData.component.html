@@ -43,7 +43,7 @@
           <option [value]="null" disabled>Selecciona un continente</option>
 
           @for (region of this.countryService.regions; track region) {
-          <option>{{ region }}</option>
+          <option [value]="region">{{ region }}</option>
           }
         </select>
         <!-- VALIACION DEL ERROR -->
@@ -60,7 +60,9 @@
           <option [value]="null" disabled>Selecciona un pais</option>
 
           @for (country of countriesByRegion(); track country.cca3) {
-          <option selected>{{ country.name.common }}</option>
+          <option [value]="country.name.common" selected>
+            {{ country.name.common }}
+          </option>
 
           }
         </select>
@@ -115,9 +117,9 @@
         <legend class="fieldset-legend">Tipo de alimentación</legend>
         <select class="select" formControlName="alimentation">
           <option disabled [value]="null">Selecciona un alimentación</option>
-          <option>Triturado</option>
-          <option>Entero</option>
-          <option>Biberón</option>
+          <option value="Triturado">Triturado</option>
+          <option value="Entero">Entero</option>
+          <option value="Biberon">Biberón</option>
         </select>
         <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'alimentation')){
@@ -130,9 +132,9 @@
       <fieldset class="fieldset m-1 p-1 w-2/5">
         <legend class="fieldset-legend">Aula</legend>
         <select class="select" formControlName="classroom">
-          <option [value]="null" disabled selected>Selecciona aula</option>
+          <option [value]="null" disabled>Selecciona aula</option>
 
-          @for (classroom of classrooms(); track classroom.id) {
+          @for (classroom of classrooms(); track $index) {
           <option [ngValue]="classroom">{{ classroom.classroomName }}</option>
           }
         </select>

@@ -43,7 +43,7 @@
           <select class="select" formControlName="region">
             <option disabled [value]="null">Selecciona un continente</option>
 
-            @for (region of this.countryService.regions; track region) {
+            @for (region of this.countryService.regions; track $index) {
             <option>{{ region }}</option>
             }
           </select>
@@ -115,7 +115,7 @@
         <select class="select" formControlName="classroom">
           <option disabled [value]="null">Selecciona aula</option>
 
-          @for (classroom of classrooms(); track classroom.id) {
+          @for (classroom of classrooms(); track $index) {
           <option [ngValue]="classroom">{{ classroom.classroomName }}</option>
           }
         </select>

@@ -2,10 +2,10 @@ import { ClassroomDto } from './ClassroomDto.inteface';
 import { ParentDto } from './ParentDto.interface';
 
 export interface StudentDto {
-  id?: number;
   name: string;
   lastname: string;
   country: string;
+  region: string;
   classroomDto: ClassroomDto;
   birthdate: Date;
   alimentation: string;

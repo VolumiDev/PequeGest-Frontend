@@ -41,4 +41,8 @@ export class CountryService {
         countriesByRegion.set(countries);
       });
   }
+
+  getRegionByCountry(country: string): Observable<Country> {
+    return this.http.get<Country>(`${this.baseUrl}/name/${country}`);
+  }
 }

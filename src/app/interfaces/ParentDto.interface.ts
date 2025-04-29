@@ -4,6 +4,7 @@ export interface ParentDto {
   name: string;
   lastname: string;
   country: string;
+  region: string;
   docid: string;
   telephone: string;
   email: string;
