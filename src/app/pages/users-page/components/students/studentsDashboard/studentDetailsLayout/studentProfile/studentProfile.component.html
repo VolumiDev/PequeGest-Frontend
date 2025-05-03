@@ -9,3 +9,55 @@
     } }
   </div>
 </div>
+
+@if(formService.wasAccept()){
+<div
+  role="alert"
+  class="alert alert-success animate-fadeIn fixed bottom-5 right-5 w-52"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 text-green-500 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M5 13l4 4L19 7"
+    />
+  </svg>
+
+  <span>Información Modificada.</span>
+</div>
+} @if(formService.isPristine()){
+<div
+  role="alert"
+  class="alert alert-warning animate-fadeIn fixed bottom-5 right-5 w-52"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 text-yellow-500 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M10.29 3.86L1.82 18a1 1 0 00.86 1.5h18.64a1 1 0 00.86-1.5L13.71 3.86a1 1 0 00-1.72 0z"
+    />
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 9v4m0 4h.01"
+    />
+  </svg>
+
+  <span>No se modifico ninguna información.</span>
+</div>
+}

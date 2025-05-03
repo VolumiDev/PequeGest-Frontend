@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  Input,
-  OnInit,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, Input, signal } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -25,21 +18,21 @@ import { ParentDto } from '../../../../../../../interfaces/ParentDto.interface';
 })
 export class ParentFormComponent {
   private fb = inject(FormBuilder);
-  private parentSignal = signal<ParentDto | null>(null);
+  // private parentSignal = signal<ParentDto | null>(null);
 
-  @Input()
-  set parent(value: ParentDto | null) {
-    this.parentSignal.set(value);
-  }
+  // @Input()
+  // set parent(value: ParentDto | null) {
+  //   this.parentSignal.set(value);
+  // }
 
-  constructor() {
-    effect(() => {
-      const parent = this.parentSignal();
-      if (parent) {
-        this.parentForm.patchValue(parent);
-      }
-    });
-  }
+  // constructor() {
+  //   effect(() => {
+  //     const parent = this.parentSignal();
+  //     if (parent) {
+  //       this.parentForm.patchValue(parent);
+  //     }
+  //   });
+  // }
 
   studentFormService = inject(StudentFormService);
 

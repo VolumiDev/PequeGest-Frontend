@@ -1,0 +1,130 @@
+<div class="w-full">
+  <form class="w-full" [formGroup]="parentForm">
+    <div class="flex">
+      <!-- nombre -->
+      <fieldset class="fieldset">
+        <legend class="fieldset-legend">Nombre</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Nombre padre"
+          formControlName="name"
+        />
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.parentForm, 'name')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.parentForm, "name") }}
+        </span>
+        }
+      </fieldset>
+      <!-- apellidos -->
+      <fieldset class="fieldset w-full px-2">
+        <legend class="fieldset-legend">Apellidos</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Apellidos padre"
+          formControlName="lastname"
+        />
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.parentForm, 'lastname')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.parentForm, "lastname") }}
+        </span>
+        }
+      </fieldset>
+    </div>
+
+    <div class="flex justify-center items-center">
+      <div class="flex flex-col">
+        <!-- nacionalidad -->
+        <fieldset class="fieldset m-3 w-full px-2">
+          <legend class="fieldset-legend">Region</legend>
+          <input class="input" type="text" formControlName="region" readonly />
+          <!-- VALIACION DEL ERROR -->
+          @if(this.formUtils.isValidField(this.parentForm, 'region')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "region") }}
+          </span>
+          }
+        </fieldset>
+        <!-- PAIS -->
+        <fieldset class="fieldset m-3 w-full px-2">
+          <legend class="fieldset-legend">Nacionalidad</legend>
+          <input class="input" type="text" formControlName="country" readonly />
+
+          <!-- VALIACION DEL ERROR -->
+          @if(this.formUtils.isValidField(this.parentForm, 'country')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "country") }}
+          </span>
+          }
+        </fieldset>
+      </div>
+      <!-- dni-nie -->
+      <fieldset class="fieldset w-full px-5">
+        <legend class="fieldset-legend">dni-nie</legend>
+        <input
+          type="text"
+          class="input"
+          placeholder="Documento"
+          formControlName="docid"
+        />
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.parentForm, 'docid')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.parentForm, "docid") }}
+        </span>
+        }
+        <!-- <p class="fieldset-label">Oblifgatorio</p> -->
+      </fieldset>
+    </div>
+
+    <div class="flex">
+      <div class="flex">
+        <!-- telefono -->
+        <fieldset class="fieldset px-2">
+          <legend class="fieldset-legend">Telefono</legend>
+          <input
+            type="text"
+            class="input"
+            placeholder="Telefono"
+            formControlName="telephone"
+          />
+          <!-- VALIACION DEL ERROR -->
+          @if(this.formUtils.isValidField(this.parentForm, 'telephone')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "telephone") }}
+          </span>
+          }
+        </fieldset>
+        <!-- email -->
+        <fieldset class="fieldset w-full px-2">
+          <legend class="fieldset-legend">Email</legend>
+          <input
+            type="text"
+            class="input"
+            placeholder="Correo electrónico"
+            formControlName="email"
+          />
+          <!-- VALIACION DEL ERROR -->
+          @if(this.formUtils.isValidField(this.parentForm, 'email')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.parentForm, "email") }}
+          </span>
+          }
+        </fieldset>
+      </div>
+    </div>
+    <!-- BOTONES -->
+
+    <div class="flex flex-row justify-end">
+      <input
+        type="submit"
+        class="btn btn-accent m-5"
+        value="Modificar"
+        (click)="updateParent()"
+      />
+    </div>
+  </form>
+</div>

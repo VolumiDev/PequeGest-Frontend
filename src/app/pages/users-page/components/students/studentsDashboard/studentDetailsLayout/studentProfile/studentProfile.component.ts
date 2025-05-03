@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
 import { take, tap } from 'rxjs';
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
+import { UserService } from '../../../../../../../services/users/user.service';
+import { FormService } from '../../../../../../../services/forms/form.service';
 
 @Component({
   selector: 'app-student-profile',
@@ -23,6 +25,8 @@ export class StudentProfileComponent implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
   userStudentTableService = inject(UserStudentTableService);
+  userService = inject(UserService);
+  formService = inject(FormService);
 
   studentSignal = this.userStudentTableService.getStudentByHash();
 

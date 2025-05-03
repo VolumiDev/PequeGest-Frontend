@@ -1,8 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { computed, inject, Injectable, Signal, signal } from '@angular/core';
+import {
+  computed,
+  inject,
+  Injectable,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { Observable } from 'rxjs';
-import { StudentDto } from '../../interfaces/StudentDto.interface';
+
+import { BaseResponse } from '../../interfaces/BaseResponse';
 import { environment } from '../../../environment/enviroment';
+import { StudentDto } from './../../interfaces/StudentDto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -30,5 +39,12 @@ export class UserStudentTableService {
 
   saveStudent(student: StudentDto): Observable<StudentDto> {
     return this.http.post<StudentDto>(`${this.BASE_URL}`, student);
+  }
+
+  updateStudent(student: StudentDto): Observable<BaseResponse> {
+    return this.http.put<BaseResponse>(
+      `${this.BASE_URL}/update/${student.hash!}`,
+      student
+    );
   }
 }

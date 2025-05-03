@@ -39,13 +39,8 @@
       <!-- nacionalidad -->
       <fieldset class="fieldset m-1 p-1 w-2/5">
         <legend class="fieldset-legend">Region</legend>
-        <select class="select" formControlName="region">
-          <option [value]="null" disabled>Selecciona un continente</option>
+        <input class="input" formControlName="region" type="text" readonly />
 
-          @for (region of this.countryService.regions; track region) {
-          <option [value]="region">{{ region }}</option>
-          }
-        </select>
         <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'region')){
         <span class="fieldset-label text-error">
@@ -56,16 +51,8 @@
       <!-- PAIS -->
       <fieldset class="fieldset m-1 p-1 w-2/5">
         <legend class="fieldset-legend">Nacionalidad</legend>
-        <select class="select" formControlName="country">
-          <option [value]="null" disabled>Selecciona un pais</option>
+        <input class="input" formControlName="country" type="text" readonly />
 
-          @for (country of countriesByRegion(); track country.cca3) {
-          <option [value]="country.name.common" selected>
-            {{ country.name.common }}
-          </option>
-
-          }
-        </select>
         <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'country')){
         <span class="fieldset-label text-error">
@@ -119,7 +106,7 @@
           <option disabled [value]="null">Selecciona un alimentación</option>
           <option value="Triturado">Triturado</option>
           <option value="Entero">Entero</option>
-          <option value="Biberon">Biberón</option>
+          <option value="Biberón">Biberón</option>
         </select>
         <!-- VALIACION DEL ERROR -->
         @if(this.formUtils.isValidField(this.studentForm, 'alimentation')){
@@ -131,7 +118,11 @@
       <!-- AULA -->
       <fieldset class="fieldset m-1 p-1 w-2/5">
         <legend class="fieldset-legend">Aula</legend>
-        <select class="select" formControlName="classroom">
+        <select
+          class="select"
+          formControlName="classroom"
+          [compareWith]="compareClassrooms"
+        >
           <option [value]="null" disabled>Selecciona aula</option>
 
           @for (classroom of classrooms(); track $index) {
