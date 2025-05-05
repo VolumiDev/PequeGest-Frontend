@@ -119,6 +119,10 @@
     <!-- BOTONES -->
 
     <div class="flex flex-row justify-end">
+      <button class="m-5 btn btn-accent" (click)="openModal()">
+        <i class="fa-solid fa-image"></i>
+      </button>
+
       <input
         type="submit"
         class="btn btn-accent m-5"
@@ -128,3 +132,14 @@
     </div>
   </form>
 </div>
+
+<app-user-upload-image
+  [isMultiple]="false"
+  [description]="'Arrastra la imagen de perfil'"
+  [acceptedFile]="'image/*'"
+  [listExist]="false"
+  [buttonContent]="'Selecciona imagen de perfil'"
+  [listLegend]="'Imagen Seleccionada'"
+  [userType]="'parent'"
+  [parent]="parentSignal()"
+/>

@@ -1,6 +1,6 @@
 <!-- dropzone.component.html -->
 
-<dialog #uploadDialog id="uploadFile" class="modal">
+<dialog #uploadCardIdDialog id="uploadCardIdFile" class="modal">
   <div class="modal-box">
     <form method="dialog">
       <button
@@ -74,21 +74,18 @@
       <img [src]="image" alt="" class="w-50 ml-auto mr-auto rounded-lg mt-3" />
       }
     </div>
-    <div
-      class="flex flex-row justify-end mt-5"
-      (click)="onSubmitImageProfile()"
-    >
+    <div class="flex flex-row justify-end mt-5" (click)="onSubmitImageCardId()">
       <button class="btn btn-accent">Guardar</button>
     </div>
     }
 
     <!-- todo <app-upload-file
-      [isMultiple]="false"
-      [description]="'Arrastra la imagen de perfil'"
-      [acceptedFile]="'image/*'"
-      [listExist]="false"
-      [buttonContent]="'Selecciona imagen de perfil'"
-      [listLegend]="'Imagen Seleccionada'"
-    /> -->
+        [isMultiple]="false"
+        [description]="'Arrastra la imagen de perfil'"
+        [acceptedFile]="'image/*'"
+        [listExist]="false"
+        [buttonContent]="'Selecciona imagen de perfil'"
+        [listLegend]="'Imagen Seleccionada'"
+      /> -->
   </div>
 </dialog>

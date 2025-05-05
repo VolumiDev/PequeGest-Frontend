@@ -2,24 +2,24 @@ import {
   Component,
   ElementRef,
   inject,
-  input,
   Input,
   signal,
   ViewChild,
 } from '@angular/core';
-import { DocumentsService } from '../../../../services/documents/documents.service';
-import { switchMap, take, tap } from 'rxjs';
-import { UserStudentTableService } from '../../../../services/student.services/usersStudentTable.service';
+import { ParentDto } from '../../../../../../../../../../interfaces/ParentDto.interface';
+import { DocumentsService } from '../../../../../../../../../../services/documents/documents.service';
+import { UserStudentTableService } from '../../../../../../../../../../services/student.services/usersStudentTable.service';
 import { Router } from '@angular/router';
-import { ParentDto } from '../../../../interfaces/ParentDto.interface';
+import { switchMap, take, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-upload-file',
+  selector: 'app-user-upload-image',
   imports: [],
-  templateUrl: './uploadFile.component.html',
+  templateUrl: './userUploadImage.component.html',
 })
-export class UploadFileComponent {
-  @ViewChild('uploadDialog') uploadFileModal!: ElementRef<HTMLDialogElement>;
+export class UserUploadImageComponent {
+  @ViewChild('uploadCardIdDialog')
+  uploadFileModal!: ElementRef<HTMLDialogElement>;
 
   @Input() isMultiple: boolean = true;
   @Input() description: string = 'Arrastra aquí tus documentos';
@@ -37,6 +37,10 @@ export class UploadFileComponent {
   files: File[] = [];
   isDragOver: boolean = false;
   tempImages = signal<string[]>([]);
+
+  openModal() {
+    this.uploadFileModal.nativeElement.showModal();
+  }
 
   onFilesChanged(event: Event) {
     const fileList = (event.target as HTMLInputElement).files;
@@ -98,44 +102,32 @@ export class UploadFileComponent {
     }
   }
 
-  onSubmitImageProfile() {
+  onSubmitImageCardId() {
     if (this.files.length === 0) {
       alert('No hay ningun archivo que subir');
       return;
     }
-    if (!this.documentService.studentSelected()?.hash) {
-      alert('No hay studiante seleccionado');
-      return;
+    if (null !== this.parent) {
+      if (!this.parent.hash) {
+        alert('No hay studiante seleccionado');
+        return;
+      }
+      const imageProfile = new FormData();
+      imageProfile.append('file', this.files[0]);
+      imageProfile.append('userHash', this.parent.hash!);
+
+      this.documentService
+        .uploadUserImageProfile(imageProfile)
+        .pipe(
+          take(1),
+          tap(() => this.documentService.imageTimestamp.set(Date.now())),
+          tap(() => this.onModalClose())
+        )
+        .subscribe({
+          error: (error) => {
+            console.log('Ocurrio un error: ', error);
+          },
+        });
     }
-
-    const imageProfile = new FormData();
-    imageProfile.append('file', this.files[0]);
-    imageProfile.append(
-      'userHash',
-      this.documentService.studentSelected()!.hash!
-    );
-    imageProfile.append('usertype', 'student');
-
-    this.documentService
-      .uploadStudentImageProfile(imageProfile)
-      .pipe(
-        take(1),
-        switchMap(() => {
-          return this.studentService.getAllStudents();
-        }),
-        tap((students) => {
-          this.studentService._students.set([...students]);
-
-          console.log('students', this.studentService._students());
-          console.log('estudiantes actualizados');
-        }),
-        tap(() => this.documentService.imageTimestamp.set(Date.now())),
-        tap(() => this.onModalClose())
-      )
-      .subscribe({
-        error: (error) => {
-          console.log('Ocurrio un error: ', error);
-        },
-      });
   }
 }

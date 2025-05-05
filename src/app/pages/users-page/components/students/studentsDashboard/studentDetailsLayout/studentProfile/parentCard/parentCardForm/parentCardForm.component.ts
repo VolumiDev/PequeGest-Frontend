@@ -1,4 +1,12 @@
-import { Component, effect, inject, Input, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  Input,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,20 +18,29 @@ import { ParentDto } from '../../../../../../../../../interfaces/ParentDto.inter
 import { UserService } from '../../../../../../../../../services/users/user.service';
 import { take } from 'rxjs';
 import { FormService } from '../../../../../../../../../services/forms/form.service';
+import { UploadFileComponent } from '../../../../../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
+import { UserUploadImageComponent } from './userUploadImage/userUploadImage.component';
 
 @Component({
   selector: 'app-parent-card-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, UserUploadImageComponent],
   templateUrl: './parentCardForm.component.html',
 })
 export class ParentCardFormComponent {
+  @ViewChild(UserUploadImageComponent)
+  userUploadImageComp!: UserUploadImageComponent;
+
+  openModal() {
+    this.userUploadImageComp.openModal();
+  }
+
   private fb = inject(FormBuilder);
   private userSerevice = inject(UserService);
   private formService = inject(FormService);
 
   formUtils = FormUtils;
 
-  private parentSignal = signal<ParentDto | null>(null);
+  parentSignal = signal<ParentDto | null>(null);
 
   @Input()
   set parent(value: ParentDto | null) {

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../../auth/services/Auth.service';
 import { environment } from '../../../environment/enviroment';
 import { StudentDto } from '../../interfaces/StudentDto.interface';
+import { BaseResponse } from '../../interfaces/BaseResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +27,20 @@ export class DocumentsService {
   //   );
   // }
 
-  uploadImageProfile(formaDataImageProfile?: FormData): Observable<string> {
+  uploadStudentImageProfile(
+    formaDataImageProfile?: FormData
+  ): Observable<string> {
     return this.http.post<string>(
-      `${this.BASE_URL}/imageProfile`,
+      `${this.BASE_URL}/student/imageProfile`,
+      formaDataImageProfile
+    );
+  }
+
+  uploadUserImageProfile(
+    formaDataImageProfile?: FormData
+  ): Observable<BaseResponse> {
+    return this.http.post<BaseResponse>(
+      `${this.BASE_URL}/user/imageProfile`,
       formaDataImageProfile
     );
   }
