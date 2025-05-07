@@ -47,4 +47,8 @@ export class UserStudentTableService {
       student
     );
   }
+
+  deleteByHash(hash: string): Observable<BaseResponse> {
+    return this.http.delete<BaseResponse>(`${this.BASE_URL}/delete/${hash}`);
+  }
 }

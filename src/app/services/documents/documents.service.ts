@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, map, Observable, of, switchMap } from 'rxjs';
 
 import { AuthService } from '../../auth/services/Auth.service';
 import { environment } from '../../../environment/enviroment';
@@ -43,5 +43,29 @@ export class DocumentsService {
       `${this.BASE_URL}/user/imageProfile`,
       formaDataImageProfile
     );
+  }
+
+  getCardIdByUserHash(
+    userHash: string
+  ): Observable<BaseResponse | Blob | null> {
+    return this.http
+      .get(`${this.BASE_URL}/cardid/${userHash}`, {
+        observe: 'response',
+        responseType: 'blob',
+      })
+      .pipe(
+        switchMap((response) => {
+          const contentType = response.headers.get('Content-Type') || '';
+
+          if (contentType.includes('application/json')) {
+            // Convertir Blob a texto y luego a JSON
+            return from(response.body!.text()).pipe(
+              map((text) => JSON.parse(text) as BaseResponse)
+            );
+          }
+
+          return of(response.body); // Es una imagen (Blob)
+        })
+      );
   }
 }
