@@ -7,6 +7,7 @@ import { UserUploadImageComponent } from './parentCardForm/userUploadImage/userU
 import { DocumentsService } from '../../../../../../../../services/documents/documents.service';
 import { catchError, of, take, tap } from 'rxjs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { environment } from '../../../../../../../../../environment/enviroment';
 
 @Component({
   selector: 'app-parent-card',
@@ -22,36 +23,37 @@ export class ParentCardComponent {
   documentService = inject(DocumentsService);
   sanitizer = inject(DomSanitizer);
 
+  BASE_URL = environment.baseUrl;
   imageUrl: SafeUrl | null = null;
   errorMessage: string | null = null;
 
   openModal() {
     console.log(this.parent);
-    this.getIdCard();
+    // this.getIdCard();
     this.idCardModal.openModal();
   }
 
-  getIdCard() {
-    this.documentService
-      .getCardIdByUserHash(this.parent!.hash!)
-      .pipe(
-        take(1),
-        tap((res) => {
-          if (res instanceof Blob) {
-            const url = URL.createObjectURL(res);
-            this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
-            this.errorMessage = null;
-          } else {
-            this.imageUrl = null;
-          }
-        }),
-        catchError((err) => {
-          console.error('Error en la petición:', err);
-          this.errorMessage = 'Error de red o servidor.';
-          this.imageUrl = null;
-          return of(null);
-        })
-      )
-      .subscribe();
-  }
+  // getIdCard() {
+  //   this.documentService
+  //     .getCardIdByUserHash(this.parent!.hash!)
+  //     .pipe(
+  //       take(1),
+  //       tap((res) => {
+  //         if (res instanceof Blob) {
+  //           const url = URL.createObjectURL(res);
+  //           this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+  //           this.errorMessage = null;
+  //         } else {
+  //           this.imageUrl = null;
+  //         }
+  //       }),
+  //       catchError((err) => {
+  //         console.error('Error en la petición:', err);
+  //         this.errorMessage = 'Error de red o servidor.';
+  //         this.imageUrl = null;
+  //         return of(null);
+  //       })
+  //     )
+  //     .subscribe();
+  // }
 }

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
+import { DragAreaToUploadComponent } from '../../../../../../../shared/documents/dragAreaToUpload/dragAreaToUpload.component';
 
 @Component({
   selector: 'app-students-documents-list',
-  imports: [],
+  imports: [DragAreaToUploadComponent],
   templateUrl: './studentsDocumentsList.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StudentsDocumentsListComponent { }
+export class StudentsDocumentsListComponent {}

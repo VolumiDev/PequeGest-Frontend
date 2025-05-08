@@ -5,7 +5,7 @@ import { StudentProfileDataComponent } from './studentProfileData/studentProfile
 import { ParentCardComponent } from './parentCard/parentCard.component';
 import { ActivatedRoute } from '@angular/router';
 import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
-import { take, tap } from 'rxjs';
+import { map, switchMap, take, tap } from 'rxjs';
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
 import { UserService } from '../../../../../../../services/users/user.service';
 import { FormService } from '../../../../../../../services/forms/form.service';
@@ -28,6 +28,7 @@ export class StudentProfileComponent implements OnInit {
   userService = inject(UserService);
   formService = inject(FormService);
 
+  // studentSignal = signal<StudentDto | null>(null);
   studentSignal = this.userStudentTableService.getStudentByHash();
 
   getStudentData(hash: string) {
@@ -35,10 +36,8 @@ export class StudentProfileComponent implements OnInit {
       .fetchStudentByHash(hash)
       .pipe(
         take(1),
-        tap((student) => this.studentSignal.set(student))
+        map((base) => this.studentSignal.set(base.content as StudentDto))
       )
       .subscribe();
-
-    console.log(this.studentSignal());
   }
 }

@@ -1,10 +1,13 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { SafeUrl } from '@angular/platform-browser';
+
 import { catchError, of, take, tap } from 'rxjs';
-import { UploadFileComponent } from '../../../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
-import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
+
 import { DocumentsService } from '../../../../../../../services/documents/documents.service';
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { UploadFileComponent } from '../../../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
+import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
 
 @Component({
   selector: 'app-students-table',
@@ -19,6 +22,8 @@ export class StudentsTableComponent implements OnInit {
   hasError = signal<boolean>(false);
   private _studentSelected = signal<StudentDto | null>(null);
   studentSelected = computed(() => this._studentSelected());
+
+  imageUrl: SafeUrl | null = null;
 
   studentSelection(student: StudentDto) {
     this.documentService.studentSelected.set(student);

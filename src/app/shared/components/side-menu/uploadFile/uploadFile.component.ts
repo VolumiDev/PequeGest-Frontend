@@ -34,9 +34,10 @@ export class UploadFileComponent {
   studentService = inject(UserStudentTableService);
   router = inject(Router);
 
+  tempImages = signal<string[]>([]);
+
   files: File[] = [];
   isDragOver: boolean = false;
-  tempImages = signal<string[]>([]);
 
   onFilesChanged(event: Event) {
     const fileList = (event.target as HTMLInputElement).files;

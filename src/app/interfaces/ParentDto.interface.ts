@@ -10,4 +10,5 @@ export interface ParentDto {
   email: string;
   role: string;
   description?: string;
+  imageURL: string;
 }

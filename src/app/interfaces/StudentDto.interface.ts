@@ -14,5 +14,5 @@ export interface StudentDto {
   parentsDto: ParentDto[];
   hash?: string;
   documents?: string;
-  imageUrl?: string;
+  imageURL?: string;
 }

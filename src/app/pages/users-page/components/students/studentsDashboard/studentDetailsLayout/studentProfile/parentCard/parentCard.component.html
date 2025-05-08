@@ -5,4 +5,7 @@
   </button>
 </div>
 
-<app-card-id-modal [imageUrl]="imageUrl" [errorMessage]="errorMessage" />
+<app-card-id-modal
+  [imageUrl]="BASE_URL + parent?.imageURL!"
+  [errorMessage]="errorMessage"
+/>

@@ -28,17 +28,9 @@
               <div class="mask mask-squircle h-12 w-12">
                 <!-- src="https://img.daisyui.com/images/profile/demo/2@94.webp" -->
                 <!-- TODO tenemos que poner la direccion de produccion -->
-
                 <img
-                  [src]="
-                    'http://localhost:8080/api/document/imageProfile/' +
-                    student.hash +
-                    (documentService.imageTimestamp()
-                      ? '?t=' + documentService.imageTimestamp()
-                      : '')
-                  "
-                  (error)="setDefaultImage($event)"
-                  alt="Avatar Tailwind CSS Component"
+                  [src]="'http://localhost:8080' + student.imageURL"
+                  alt="ImageProfile"
                 />
               </div>
             </div>
@@ -51,7 +43,6 @@
           </div>
         </td>
         <td>
-          {{ student.lastname }} {{ student.imageUrl }}
           <!-- <br />
               <span class="badge badge-ghost badge-sm">Desktop Support Technician</span> -->
         </td>

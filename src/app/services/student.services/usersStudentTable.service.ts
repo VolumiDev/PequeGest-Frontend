@@ -33,8 +33,8 @@ export class UserStudentTableService {
     return this.http.get<StudentDto[]>(`${this.BASE_URL}/all`);
   }
 
-  fetchStudentByHash(hash: string): Observable<StudentDto> {
-    return this.http.get<StudentDto>(`${this.BASE_URL}/${hash}`);
+  fetchStudentByHash(hash: string): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(`${this.BASE_URL}/${hash}`);
   }
 
   saveStudent(student: StudentDto): Observable<StudentDto> {
