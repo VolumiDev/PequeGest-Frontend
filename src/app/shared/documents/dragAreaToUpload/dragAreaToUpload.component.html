@@ -1,5 +1,5 @@
 <div
-  class="drop-zone border-2 border-dashed border-gray-300 bg-white rounded-lg p-8 flex flex-col items-center justify-center hover:border-blue-500 transition duration-300"
+  class="drop-zone border-2 border-dashed border-gray-300 bg-white rounded-lg p-8 flex flex-col items-center justify-center hover:border-blue-500 transition duration-300 m-3"
   (dragover)="onDragOver($event)"
   (dragleave)="onDragLeave($event)"
   (drop)="onDrop($event)"
@@ -27,7 +27,13 @@
   </p>
 
   <!-- Input para seleccionar archivos (oculto) -->
-  <input type="file" [multiple]="true" hidden #fileInput />
+  <input
+    type="file"
+    [multiple]="true"
+    (change)="onFilesChanged($event)"
+    hidden
+    #fileInput
+  />
 
   <!-- Botón para abrir el diálogo de selección -->
   <button

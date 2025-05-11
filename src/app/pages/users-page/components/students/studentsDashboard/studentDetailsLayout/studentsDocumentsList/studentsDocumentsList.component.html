@@ -1,4 +1,11 @@
 <app-drag-area-to-upload
   [isMultiple]="true"
   [listLegend]="'Arrastre aqui sus documentos'"
+  [targetHash]="studentHash"
+  (rechargeDocsEvent)="getDocsByStudentHash(studentHash)"
 />
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+  @for (doc of docs(); track doc.hash) {
+  <app-document-card [doc]="doc" />
+  }
+</div>

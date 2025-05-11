@@ -18,7 +18,6 @@ import { ParentDto } from '../../../../../../../../../interfaces/ParentDto.inter
 import { UserService } from '../../../../../../../../../services/users/user.service';
 import { take } from 'rxjs';
 import { FormService } from '../../../../../../../../../services/forms/form.service';
-import { UploadFileComponent } from '../../../../../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
 import { UserUploadImageComponent } from './userUploadImage/userUploadImage.component';
 
 @Component({

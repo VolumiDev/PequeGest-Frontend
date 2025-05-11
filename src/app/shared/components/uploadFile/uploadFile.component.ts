@@ -7,11 +7,11 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { DocumentsService } from '../../../../services/documents/documents.service';
 import { switchMap, take, tap } from 'rxjs';
-import { UserStudentTableService } from '../../../../services/student.services/usersStudentTable.service';
 import { Router } from '@angular/router';
-import { ParentDto } from '../../../../interfaces/ParentDto.interface';
+import { UserStudentTableService } from '../../../services/student.services/usersStudentTable.service';
+import { DocumentsService } from '../../../services/documents/documents.service';
+import { ParentDto } from '../../../interfaces/ParentDto.interface';
 
 @Component({
   selector: 'app-upload-file',

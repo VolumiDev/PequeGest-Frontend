@@ -6,8 +6,8 @@ import { catchError, of, take, tap } from 'rxjs';
 
 import { DocumentsService } from '../../../../../../../services/documents/documents.service';
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
-import { UploadFileComponent } from '../../../../../../../shared/components/side-menu/uploadFile/uploadFile.component';
 import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
+import { UploadFileComponent } from '../../../../../../../shared/components/uploadFile/uploadFile.component';
 
 @Component({
   selector: 'app-students-table',

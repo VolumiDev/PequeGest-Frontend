@@ -19,14 +19,6 @@ export class DocumentsService {
   studentSelected = signal<StudentDto | null>(null);
   imageTimestamp = signal<number | null>(null);
 
-  // uploadDocuments(documents?: FileList): Observable<string[]> {
-  //   if (!documents) return of([]);
-
-  //   const uploadObservables = Array.from(documents).map((documentFile) =>
-  //     this.uploadDocument(documentFile)
-  //   );
-  // }
-
   uploadStudentImageProfile(
     formaDataImageProfile?: FormData
   ): Observable<string> {
@@ -67,5 +59,29 @@ export class DocumentsService {
           return of(response.body); // Es una imagen (Blob)
         })
       );
+  }
+
+  getDocsByStudentHash(hash: string): Observable<BaseResponse> {
+    return this.http.get<BaseResponse>(`${this.BASE_URL}/student/${hash}`);
+  }
+
+  uploadDocs(hash: string, type: string, files: File[]) {
+    const formData = new FormData();
+
+    for (const file of files) {
+      formData.append('files', file);
+    }
+
+    return this.http.post(`${this.BASE_URL}/upload/${hash}`, formData, {
+      headers: {
+        userType: type,
+      },
+    });
+  }
+
+  downloadDocByHash(hash: string): Observable<Blob> {
+    return this.http.get(`${this.BASE_URL}/download/${hash}`, {
+      responseType: 'blob',
+    });
   }
 }

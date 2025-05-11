@@ -1,4 +1,13 @@
-import { Component, Input, signal } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  signal,
+} from '@angular/core';
+import { DocumentsService } from '../../../services/documents/documents.service';
+import { catchError, of, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-drag-area-to-upload',
@@ -12,6 +21,11 @@ export class DragAreaToUploadComponent {
   @Input() buttonContent: string = 'Seleccionar archivos';
   @Input() listLegend: string = 'Archivos seleccionados:';
   @Input() userType: string = 'student';
+  @Input() targetHash: string = '';
+
+  @Output() rechargeDocsEvent = new EventEmitter<void>();
+
+  docService = inject(DocumentsService);
 
   tempFiles = signal<string[]>([]);
 
@@ -19,26 +33,31 @@ export class DragAreaToUploadComponent {
   files: File[] = [];
   isDragOver: boolean = false;
 
+  onFilesChanged(event: Event) {
+    const fileList = (event.target as HTMLInputElement).files;
+
+    if (fileList) {
+      for (let i = 0; i < fileList.length; i++) {
+        this.files.push(fileList.item(i)!);
+      }
+    }
+  }
+
   onDrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.isDragOver = false;
 
-    // Verificamos que existan archivos en el event
     if (event.dataTransfer && event.dataTransfer.files) {
       const droppedFiles = event.dataTransfer.files;
-      const imageUrls: string[] = [];
 
       for (let i = 0; i < droppedFiles.length; i++) {
         const file = droppedFiles.item(i);
 
         if (file) {
           this.files.push(file);
-          imageUrls.push(URL.createObjectURL(file));
         }
       }
-
-      this.tempFiles.set(imageUrls);
     }
   }
 
@@ -55,6 +74,16 @@ export class DragAreaToUploadComponent {
   }
 
   onSubmitDocs() {
-    throw new Error('Method not implemented.');
+    this.docService
+      .uploadDocs(this.targetHash, this.userType, this.files)
+      .pipe(
+        take(1),
+        tap(() => this.rechargeDocsEvent.emit()),
+        catchError((err) => {
+          console.log('Ocurrio un error', err);
+          return of([]);
+        })
+      )
+      .subscribe();
   }
 }

@@ -1,0 +1,36 @@
+@if(doc){
+<div class="card w-80 bg-base-100 shadow-xl">
+  <figure class="h-48 bg-gray-100 flex items-center justify-center">
+    @if (doc.format === 'pdf') {
+    <!-- pdf -->
+    <img src="pdf.png" alt="Archivo pdf" class="object-contain max-h-full" />
+    } @else if (imgFormats.includes(doc.format)){
+    <img
+      [src]="domain + doc.path"
+      [alt]="doc.fileName"
+      class="object-contain max-h-full"
+    />
+    } @else{
+    <img
+      src="formato.png"
+      alt="formato varaiado"
+      class="object-contain max-h-full"
+    />
+    }
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title break-words">{{ doc.fileName }}</h2>
+    <div class="flex justify-between text-sm text-gray-500 mt-2">
+      <span>Formato: {{ doc.format }}</span>
+      <span>Tamaño: {{ doc.size / 1000 }} MB</span>
+    </div>
+    <div class="card-actions justify-end mt-4">
+      <button class="btn btn-sm btn-primary" (click)="showDoc()">Ver</button>
+      <button class="btn btn-sm btn-secondary" (click)="downloadDoc()">
+        Descargar
+      </button>
+    </div>
+  </div>
+</div>
+
+}
