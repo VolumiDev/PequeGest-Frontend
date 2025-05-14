@@ -4,6 +4,7 @@ import {
   FormGroup,
   ValidationErrors,
   ValidatorFn,
+  Validators,
 } from '@angular/forms';
 
 export class FormUtils {
@@ -34,7 +35,9 @@ export class FormUtils {
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
             return 'El valor ingresado no parece un correo electrónico';
           }
-          if (errors['pattern'].requiredPattern === FormUtils.notOnlySpacesPattern) {
+          if (
+            errors['pattern'].requiredPattern === FormUtils.notOnlySpacesPattern
+          ) {
             return 'No introduzca espacios en blanco únicamente';
           }
           return 'Error de patrón contra expresión regular';
@@ -59,7 +62,6 @@ export class FormUtils {
     return this.getTextError(errors);
   }
 
-
   static customDateFormater(): string {
     const today = new Date();
     const yyyy = today.getFullYear();
@@ -83,6 +85,15 @@ export class FormUtils {
     }
 
     return null;
+  }
+
+  static targetUsersValidator(hashesList: () => string[]): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (hashesList().length === 0) {
+        return { noDestinatary: 'No hay ningún destinatario en la lista' };
+      }
+      return null;
+    };
   }
 
   // static minArrayLengthValidator(min: number): ValidatorFn {

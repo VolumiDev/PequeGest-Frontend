@@ -8,8 +8,6 @@ import { AuthResponse } from '../interfaces/AuthResponse.interface';
 import { UserAuth } from '../interfaces/UserAuth.interface';
 import { Router } from '@angular/router';
 
-
-
 type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
 const baseUrl = environment.baseUrl;
 
@@ -30,7 +28,6 @@ export class AuthService {
     if (this._authStatus() === 'checking') return 'checking';
 
     if (this._user()) {
-
       return 'authenticated';
     }
     return 'not-authenticated';
@@ -40,28 +37,19 @@ export class AuthService {
 
   token = computed(() => this._token());
 
-
   login(email: string, password: string): Observable<boolean> {
-
-    console.log(`${baseUrl}/auth/login`, 
-      {
+    return this.http
+      .post<AuthResponse>(`${baseUrl}/auth/login`, {
         email: email,
-        password: password
-      }
-    )
+        password: password,
+      })
+      .pipe(
+        map((resp) => this.handleAuthSuccess(resp)),
+        catchError((error: any) => this.handelAuthError(error))
+      );
+  }
 
-    return this.http.post<AuthResponse>(`${baseUrl}/auth/login`, {
-      email: email,
-      password: password
-    }).pipe(
-      map((resp) => this.handleAuthSuccess(resp)),
-      catchError((error: any) => this.handelAuthError(error))
-    );
-  };
-
-
-   checkStatus(): Observable<boolean> {
-
+  checkStatus(): Observable<boolean> {
     const token = localStorage.getItem('token');
 
     if (!token) {
@@ -69,40 +57,38 @@ export class AuthService {
       return of(false);
     }
 
-    return this.http.get<AuthResponse>(`${baseUrl}/auth/check-status`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-    }).pipe(
-      map((resp) => this.handleAuthSuccess(resp)),
-      catchError((error: any) => this.handelAuthError(error))
-    )
+    return this.http
+      .get<AuthResponse>(`${baseUrl}/auth/check-status`, {
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
+      })
+      .pipe(
+        map((resp) => this.handleAuthSuccess(resp)),
+        catchError((error: any) => this.handelAuthError(error))
+      );
   }
 
-
-
-  logout(){
+  logout() {
     this._user.set(null);
     this._token.set(null);
     this._authStatus.set('not-authenticated');
 
     localStorage.removeItem('token');
   }
-  
-  sessionClose(){
+
+  sessionClose() {
     this._user.set(null);
     this._token.set(null);
     this._authStatus.set('not-authenticated');
-  
+
     localStorage.removeItem('token');
-    
-    this.router.navigateByUrl("/auth/login");
+
+    this.router.navigateByUrl('/auth/login');
   }
 
-
-  private handleAuthSuccess({ token, userAuth } : AuthResponse){
-    
-    this._user.set(userAuth)
+  private handleAuthSuccess({ token, userAuth }: AuthResponse) {
+    this._user.set(userAuth);
     this._authStatus.set('authenticated');
     this._token.set(token);
 
@@ -110,9 +96,8 @@ export class AuthService {
     return true;
   }
 
-
-  private handelAuthError(error: any){
-    this.logout()
+  private handelAuthError(error: any) {
+    this.logout();
     return of(false);
   }
 }

@@ -17,22 +17,6 @@ import { FormUtils } from '../../../../../../../utils/FormUtils';
 })
 export class ParentFormComponent {
   private fb = inject(FormBuilder);
-  //TODO borrar comment
-  // private parentSignal = signal<ParentDto | null>(null);
-
-  // @Input()
-  // set parent(value: ParentDto | null) {
-  //   this.parentSignal.set(value);
-  // }
-
-  // constructor() {
-  //   effect(() => {
-  //     const parent = this.parentSignal();
-  //     if (parent) {
-  //       this.parentForm.patchValue(parent);
-  //     }
-  //   });
-  // }
 
   studentFormService = inject(StudentFormService);
 

@@ -1,0 +1,20 @@
+<div
+  class="chat"
+  [class.chat-start]="!isOwnMessage()"
+  [class.chat-end]="isOwnMessage()"
+>
+  <div class="chat-image avatar">
+    <div class="w-10 rounded-full">
+      <img alt="Imagen perfil" [src]="baseurl + msg?.imgURL" />
+    </div>
+  </div>
+  <div class="chat-header">
+    {{ msg?.senderName }}
+    <time class="text-xs opacity-50">{{
+      msg?.send_date | date : "dd/MM/YYYY HH:mm"
+    }}</time>
+  </div>
+  <div class="chat-bubble bg-primary">
+    {{ msg?.content }}
+  </div>
+</div>

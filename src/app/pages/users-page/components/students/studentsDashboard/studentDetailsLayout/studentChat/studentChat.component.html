@@ -1,1 +1,81 @@
-<p>studentChat works!</p>,
+<div class="h-11/12 p-2 flex flex-col">
+  <div class="flex flex-row w-full justify-around bg-">
+    @for (parent of msgService.studentTarget()?.parentsDto; track parent.hash) {
+    <div
+      (click)="addDestinatary(parent)"
+      class="flex rounded-lg h-15 w-60 m-5 p-3 btn"
+      [class.btn-accent]="isOnList(parent.hash!)"
+      [class.btn-secondary]="!isOnList(parent.hash!)"
+    >
+      {{ parent.name }} {{ parent.lastname }}
+    </div>
+
+    }
+  </div>
+  <!-- caja de mensajes  -->
+  <app-message-box
+    [studentHash]="studentHash"
+    class="overflow-auto p-2 flex-1"
+  />
+
+  <!-- caja de texto -->
+
+  <app-input-chat-message />
+</div>
+@if(isIncluded){
+<div
+  role="alert"
+  class="alert alert-success animate-fadeIn fixed bottom-5 right-5 w-52"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 text-yellow-500 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M10.29 3.86L1.82 18a1 1 0 00.86 1.5h18.64a1 1 0 00.86-1.5L13.71 3.86a1 1 0 00-1.72 0z"
+    />
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 9v4m0 4h.01"
+    />
+  </svg>
+
+  <span>Destinatario incluido.</span>
+</div>
+} @if(isRemoved){
+<div
+  role="alert"
+  class="alert alert-warning animate-fadeIn fixed bottom-5 right-5 w-52"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    class="h-6 w-6 text-yellow-500 stroke-current"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M10.29 3.86L1.82 18a1 1 0 00.86 1.5h18.64a1 1 0 00.86-1.5L13.71 3.86a1 1 0 00-1.72 0z"
+    />
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="2"
+      d="M12 9v4m0 4h.01"
+    />
+  </svg>
+
+  <span>Destinatario eliminado.</span>
+</div>
+}

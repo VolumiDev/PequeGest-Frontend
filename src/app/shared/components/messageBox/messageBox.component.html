@@ -1,0 +1,14 @@
+@if(this.msgsToShow()){
+<div class="bg-neutral-300 h-full p-4 rounded-3xl flex flex-col-reverse">
+  <!-- chat star para el que recibe -->
+  @if(msgsToShow().length === 0){
+  <div class="alert-warning bg-warning rounded-xl h-14 text-center">
+    No hay mensajes
+  </div>
+  } @else { @for (msg of msgsToShow(); track msg.hash) {
+  <app-message-bubble [msg]="msg" />
+
+  } }
+</div>
+
+}
