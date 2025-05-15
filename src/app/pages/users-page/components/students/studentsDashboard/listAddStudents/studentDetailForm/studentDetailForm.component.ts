@@ -59,7 +59,7 @@ export class StudentDetailFormComponent implements OnInit {
     birthdate: ['', [Validators.required, FormUtils.birthdateValidator]],
     alimentation: [null, [Validators.required]],
     classroom: [null, [Validators.required]],
-    comments: ['', [Validators.pattern(FormUtils.notOnlySpacesPattern)]],
+    comments: ['', []],
     doubleAuthorization: [false],
     isFormParentActive: [false],
   });
@@ -78,8 +78,24 @@ export class StudentDetailFormComponent implements OnInit {
   });
 
   onSubmitStudent() {
+    console.log('hola');
     if (this.studentForm.invalid) {
       this.studentForm.markAllAsTouched();
+
+      // 👇 LOG DE TODOS LOS ERRORES DEL FORMULARIO
+      console.log('Errores del formulario:', this.studentForm.errors);
+      console.log('Controles con errores:');
+      Object.keys(this.studentForm.controls).forEach((key) => {
+        const control = this.studentForm.get(key);
+        if (control && control.invalid) {
+          console.log(
+            `- ${key}:`,
+            control.errors,
+            'Valor actual:',
+            control.value
+          );
+        }
+      });
       return;
     }
 
