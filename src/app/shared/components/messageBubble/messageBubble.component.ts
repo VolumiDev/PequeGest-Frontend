@@ -1,12 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
 import { MessageDto } from '../../../interfaces/MessageDto.interface';
-import { DatePipe } from '@angular/common';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { AuthService } from '../../../auth/services/Auth.service';
 import { environment } from '../../../../environment/enviroment';
 
 @Component({
   selector: 'app-message-bubble',
-  imports: [DatePipe],
+  imports: [DatePipe, JsonPipe],
   templateUrl: './messageBubble.component.html',
 })
 export class MessageBubbleComponent {

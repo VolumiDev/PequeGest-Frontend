@@ -1,27 +1,36 @@
 import { Routes } from '@angular/router';
-import { UsersPageComponent } from '../pages/users-page/users-page.component';
-import { StudentDashboardComponent } from '../pages/users-page/components/students/studentsDashboard/studentDashboard.component';
+import { MainLayoutComponent } from '../shared/layout/main-layout/main-layout.component';
 
 export const routes: Routes = [
   {
-    path: "",
-    component: UsersPageComponent,
+    path: '',
+    component: MainLayoutComponent,
     children: [
       {
-        path: 'students',
-        component: StudentDashboardComponent,
-        loadChildren: () =>
-          import('./students.routes').then((m) => m.routes)
+        path: 'dashboard',
+        loadComponent: () =>
+          import('../pages/userUI/dashboard/dashboard.component').then(
+            (c) => c.DashboardComponent
+          ),
       },
       {
-        path: 'educators',
+        path: 'children',
         loadComponent: () =>
-          import('../pages/users-page/components/educators-table/educators-table.component').then((c) => c.EducatorsTableComponent),
+          import('../pages/userUI/student/student.component').then(
+            (c) => c.StudentComponent
+          ),
+      },
+      {
+        path: 'messages',
+        loadComponent: () =>
+          import('../pages/userUI/messages/messages.component').then(
+            (c) => c.MessagesComponent
+          ),
       },
       {
         path: '**',
-        redirectTo: "students",
+        redirectTo: 'dashboard',
       },
     ],
   },
-]
+];

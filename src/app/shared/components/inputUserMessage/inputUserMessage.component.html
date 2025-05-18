@@ -1,0 +1,27 @@
+<div class="flex justify-center">
+  <form class="w-full flex justify-center" [formGroup]="msgForm">
+    <div class="flex flex-row w-full justify-center items-center">
+      <fieldset class="fieldset w-full px-2">
+        <legend class="fieldset-legend">Mensaje</legend>
+        <textarea
+          formControlName="messageContent"
+          class="textarea h-24 w-full"
+          placeholder="Escribe tu mensaje..."
+        ></textarea>
+        <!-- VALIACION DEL ERROR -->
+        @if(this.formUtils.isValidField(this.msgForm, 'messageContent')){
+        <span class="fieldset-label text-error">
+          {{ this.formUtils.getFieldError(this.msgForm, "messageContent") }}
+        </span>
+        }
+      </fieldset>
+
+      <input
+        type="submit"
+        class="btn ml-4 btn-primary"
+        value="Enviar"
+        (click)="onSendMsg()"
+      />
+    </div>
+  </form>
+</div>

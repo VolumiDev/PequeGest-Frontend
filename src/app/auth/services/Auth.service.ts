@@ -100,4 +100,19 @@ export class AuthService {
     this.logout();
     return of(false);
   }
+
+  private getTokenPayload() {
+    const token = this._token();
+    if (!token) return null;
+    try {
+      return JSON.parse(atob(token.split('.')[1]));
+    } catch {
+      return null;
+    }
+  }
+
+  getUserRole(): string | null {
+    const payload = this.getTokenPayload();
+    return payload?.role ?? null;
+  }
 }
