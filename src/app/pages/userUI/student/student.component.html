@@ -1,3 +1,73 @@
-<div class="p-10 h-dvh">
-  <app-on-construct />
+<div class="p-10 flex flex- items-center justify-center w-full gap-6">
+  <!-- Selector de alumnos -->
+  @for( student of students(); track student.hash){
+  <app-user-uistudent-card [student]="student" />
+  }
+  <!-- <div class="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"> -->
+  <!-- <button
+        [class.ring-2]="selectedStudent() === student"
+        [class.ring-primary]="selectedStudent() === student"
+        [class.bg-primary]="selectedStudent() === student"
+        class="card card-compact bg-base-100 shadow-md border border-base-200 transition-transform hover:scale-105 hover:shadow-xl rounded-xl p-2 flex flex-row items-center gap-3 focus:outline-none focus:ring focus:ring-primary"
+        (click)="selectStudent(student)"
+        type="button"
+      >
+        
+        <div class="avatar">
+          <div class="w-5 h-5 rounded-full overflow-hidden">
+            <img
+              [src]="BASE_URL + student.imageURL"
+              [alt]="student.name + ' ' + student.lastname"
+            />
+            <ng-template #noImg>
+              <span
+                class="flex items-center justify-center w-full h-full bg-base-200 text-base-content"
+              >
+                <svg
+                  class="w-6 h-6 opacity-30"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5.121 17.804A9.969 9.969 0 0112 15c2.485 0 4.77.908 6.879 2.422M15 11a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </span>
+            </ng-template>
+          </div>
+        </div>
+    
+    
+    
+        <div class="flex flex-col items-start">
+          <span class="font-semibold text-base text-base-content">
+            {{ student.name }} {{ student.lastname }}
+          </span>
+          <span class="text-sm text-base-content/60">
+            {{ getAge(student.birthdate) }} años
+          </span>
+        </div>
+      </button>
+    
+      
+    </div>
+    
+    
+    
+    
+    <div *ngIf="selectedStudent" class="w-full mt-4">
+      <app-user-uistudent-card [_student]="selectedStudent" />
+    </div>
+    <div *ngIf="!selectedStudent" class="mt-8 text-base-content/60 text-center">
+      <span>Selecciona un alumno para ver los detalles</span>
+    </div>
+    </div> -->
+  <!-- <div class="p-10 h-dvh">
+        <app-on-construct />
+      </div> -->
+  <!-- </div> -->
 </div>

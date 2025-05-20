@@ -12,6 +12,7 @@ export class FormUtils {
   static emailPattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   // prettier-ignore
   static notOnlySpacesPattern = '^(?!\s*$)[A-Za-z0-9\s]+$';
+  static dniLetters = 'TRWAGMYFPDXBNJZSQVHLCKE';
 
   static getTextError(errors: ValidationErrors): string | null {
     for (const key of Object.keys(errors)) {
@@ -31,6 +32,8 @@ export class FormUtils {
         case 'emailTaken':
           return `El correo electrónico ya esta siendo usado por otro usuario`;
 
+        case 'dniInvalidFormat':
+          return `El dni no tiene un formato correcto`;
         case 'pattern':
           if (errors['pattern'].requiredPattern === FormUtils.emailPattern) {
             return 'El valor ingresado no parece un correo electrónico';
@@ -96,13 +99,39 @@ export class FormUtils {
     };
   }
 
-  // static minArrayLengthValidator(min: number): ValidatorFn {
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     const value = control.value;
-  //     if (Array.isArray(value) && value.length < min) {
-  //       return { minArraylength: { required: min, actual: value.length } };
-  //     }
-  //     return null;
-  //   };
-  // }
+  static dniNieValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = (control.value || '').toUpperCase().trim();
+
+      const dniMatch = /^(\d{8})([A-Z])$/.exec(value);
+
+      const nieMatch = /^([XYZ])(\d{7})([A-Z])$/.exec(value);
+
+      if (dniMatch) {
+        //TODO Para las pruebas lo comentamos
+        // const number = parseInt(dniMatch[1], 10);
+        // const letter = dniMatch[2];
+        // const expectedLetter = this.dniLetters[number % 23];
+        // if (letter !== expectedLetter) {
+        //   return { dniNieInvalidLetter: true };
+        // }
+        return null;
+      }
+
+      if (nieMatch) {
+        //TODO Para las pruebas lo comentamos
+        // const prefix = { X: '0', Y: '1', Z: '2' }[nieMatch[1]];
+        // const number = parseInt(prefix + nieMatch[2], 10);
+        // const letter = nieMatch[3];
+        // const expectedLetter = this.dniLetters[number % 23];
+        // if (letter !== expectedLetter) {
+        //   return { dniNieInvalidLetter: true };
+        // }
+        return null;
+      }
+
+      // Ni formato de DNI ni de NIE
+      return { dniNieInvalidFormat: true };
+    };
+  }
 }

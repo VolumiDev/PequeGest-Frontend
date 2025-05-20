@@ -140,8 +140,7 @@ export class StudentDetailFormComponent implements OnInit {
       )
       .subscribe();
 
-    //TODO
-    //this.resetForm();
+    this.resetForm();
   }
 
   resetForm() {

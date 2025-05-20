@@ -30,7 +30,7 @@ export class ParentFormComponent {
     lastname: ['', [Validators.required]],
     region: [null, [Validators.required]],
     country: [null, [Validators.required]],
-    docid: ['', [Validators.required]],
+    docid: ['', [Validators.required, FormUtils.dniNieValidator]],
     telephone: ['', [Validators.required]],
     email: [
       '',

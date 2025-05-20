@@ -16,6 +16,8 @@ export class OnConstructComponent implements OnInit, OnDestroy {
   @ViewChild('countdownRef', { static: true })
   countdownElement!: ElementRef<HTMLSpanElement>;
   private countdownInterval!: number;
+  private confettiInterval!: number;
+
   launchDate = new Date();
 
   ngOnInit(): void {
@@ -26,12 +28,16 @@ export class OnConstructComponent implements OnInit, OnDestroy {
       () => this.updateCountdown(),
       1000
     );
-    // Confeti automático cada 15 segundos
-    window.setInterval(() => this.launchConfetti(), 15000);
+    /// Guardamos el interval del confeti
+    this.confettiInterval = window.setInterval(
+      () => this.launchConfetti(),
+      15000
+    );
   }
 
   ngOnDestroy(): void {
     clearInterval(this.countdownInterval);
+    clearInterval(this.confettiInterval);
   }
 
   updateCountdown(): void {

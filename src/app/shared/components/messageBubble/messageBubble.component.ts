@@ -6,7 +6,7 @@ import { environment } from '../../../../environment/enviroment';
 
 @Component({
   selector: 'app-message-bubble',
-  imports: [DatePipe, JsonPipe],
+  imports: [DatePipe],
   templateUrl: './messageBubble.component.html',
 })
 export class MessageBubbleComponent {

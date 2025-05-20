@@ -1,0 +1,127 @@
+<div
+  class="max-w-lg mx-auto rounded-2xl shadow-xl bg-base-100 p-6 flex flex-col items-center gap-4 transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
+  onclick="my_modal_2.showModal()"
+>
+  <!-- Imagen de perfil -->
+  {{ student!.imageURL }}
+  <div class="avatar">
+    <div
+      class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 overflow-hidden animate-fade-in"
+    >
+      <img
+        [src]="BASE_URL + student!.imageURL"
+        [alt]="student!.name + ' ' + student!.lastname"
+      />
+    </div>
+  </div>
+
+  <!-- Nombre completo -->
+  <h2
+    class="text-2xl font-bold text-primary-content tracking-wide animate-fade-in-down"
+  >
+    {{ student!.name }} {{ student!.lastname }}
+  </h2>
+
+  <!-- Aula y fecha de nacimiento -->
+  <div
+    class="w-full flex flex-col sm:flex-row justify-between items-center text-base-content gap-2"
+  >
+    <div class="badge badge-accent badge-outline px-4 py-2">
+      {{ student!.classroomDto.classroomName }}
+    </div>
+    <div class="text-sm opacity-70 flex items-center gap-1">
+      <i class="fa-solid fa-cake-candles"></i>
+      <span>{{ student!.birthdate | date : "longDate" }}</span>
+    </div>
+  </div>
+
+  <!-- País y región -->
+  <div class="w-full flex gap-3 mt-2">
+    <div class="badge badge-info badge-outline">{{ student!.country }}</div>
+    <div class="badge badge-ghost badge-outline">{{ student!.region }}</div>
+  </div>
+
+  <!-- Alimentación -->
+  <div class="w-full mt-3">
+    <label class="font-semibold">Alimentación:</label>
+    <span class="ml-2">{{ student!.alimentation }}</span>
+  </div>
+
+  <!-- Comentarios -->
+  <div class="w-full mt-2">
+    <label class="font-semibold">Comentarios:</label>
+    <span class="ml-2 italic opacity-80">
+      {{ student!.comments || "Sin comentarios." }}
+    </span>
+  </div>
+
+  <!-- Autorización doble -->
+  <div class="w-full flex items-center gap-2 mt-2">
+    <span class="font-semibold">Autorización doble:</span>
+    <input
+      type="checkbox"
+      class="toggle toggle-primary"
+      [checked]="student!.doubleAuthorization"
+      disabled
+    />
+  </div>
+</div>
+
+<dialog id="my_modal_2" class="modal">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Formulario de autorización</h3>
+
+    <form class="w-full" [formGroup]="authForm">
+      <div class="flex flex-col">
+        <!-- nombre -->
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Nombre Completo</legend>
+          <input
+            type="text"
+            class="input"
+            placeholder="Nombre Autorizado"
+            formControlName="beneficiary"
+          />
+          <!-- VALIACION DEL ERROR -->
+          @if(this.formUtils.isValidField(this.authForm, 'beneficiary')){
+          <span class="fieldset-label text-error">
+            {{ this.formUtils.getFieldError(this.authForm, "beneficiary") }}
+          </span>
+          }
+        </fieldset>
+        <!-- apellidos -->
+        <fieldset class="fieldset w-full px-2">
+          <legend class="fieldset-legend">Documento Identidad</legend>
+          <input
+            type="text"
+            class="input"
+            placeholder="Documento Identidad"
+            formControlName="docidBeneficiary"
+          />
+          <!-- VALIACION DEL ERROR -->
+          @if(this.formUtils.isValidField(this.authForm, 'docidBeneficiary')){
+          <span class="fieldset-label text-error">
+            {{
+              this.formUtils.getFieldError(this.authForm, "docidBeneficiary")
+            }}
+          </span>
+          }
+        </fieldset>
+      </div>
+
+      <!-- BOTONES -->
+
+      <div class="flex flex-row justify-end">
+        <input
+          type="submit"
+          class="btn btn-accent m-5"
+          value="Añadir"
+          (click)="generateAthorization()"
+        />
+      </div>
+    </form>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>close</button>
+  </form>
+</dialog>
