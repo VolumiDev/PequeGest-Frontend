@@ -10,12 +10,10 @@ export function authInterceptor(
     return next(req);
   }
 
-  // Inject the current `AuthService` and use it to get an authentication token:
   const token = inject(AuthService).token();
 
   if (!token) return next(req);
 
-  // Clone the request to add the authentication header.
   const newReq = req.clone({
     headers: req.headers.append('Authorization', `Bearer ${token}`),
   });

@@ -8,6 +8,7 @@ import { DocumentsService } from '../../../../../../../services/documents/docume
 import { StudentDto } from '../../../../../../../interfaces/StudentDto.interface';
 import { UserStudentTableService } from '../../../../../../../services/student.services/usersStudentTable.service';
 import { UploadFileComponent } from '../../../../../../../shared/components/uploadFile/uploadFile.component';
+import { environment } from '../../../../../../../../environment/enviroment';
 
 @Component({
   selector: 'app-students-table',
@@ -15,6 +16,8 @@ import { UploadFileComponent } from '../../../../../../../shared/components/uplo
   templateUrl: './students-table.component.html',
 })
 export class StudentsTableComponent implements OnInit {
+  readonly BASE_URL = environment.baseUrl;
+
   studentService = inject(UserStudentTableService);
   documentService = inject(DocumentsService);
 
