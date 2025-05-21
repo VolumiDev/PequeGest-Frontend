@@ -1,11 +1,30 @@
-<app-drag-area-to-upload
-  [isMultiple]="true"
-  [listLegend]="'Arrastre aqui sus documentos'"
-  [targetHash]="studentHash"
-  (rechargeDocsEvent)="getDocsByStudentHash(studentHash)"
-/>
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
-  @for (doc of docs(); track doc.hash) {
-  <app-document-card [doc]="doc" />
-  }
+<!-- ZONA DE SUBIDA RESPONSIVE -->
+<div class="flex justify-center items-center w-full px-2 sm:px-4">
+  <div class="w-full max-w-lg">
+    <app-drag-area-to-upload
+      [isMultiple]="true"
+      [listLegend]="'Arrastre aquí sus documentos'"
+      [targetHash]="studentHash"
+      (rechargeDocsEvent)="getDocsByStudentHash(studentHash)"
+    />
+  </div>
+</div>
+
+<!-- GRID DE DOCUMENTOS RESPONSIVE Y MULTIFILA -->
+<div class="px-2 sm:px-4 md:px-8">
+  <div
+    *ngIf="docs()?.length; else noDocs"
+    class="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-6 mt-5"
+  >
+    @for (doc of docs(); track doc.hash) {
+    <app-document-card [doc]="doc" />
+    }
+  </div>
+  <ng-template #noDocs>
+    <div class="flex flex-col items-center justify-center py-12">
+      <span class="text-gray-400 text-lg text-center"
+        >No hay documentos por mostrar</span
+      >
+    </div>
+  </ng-template>
 </div>
