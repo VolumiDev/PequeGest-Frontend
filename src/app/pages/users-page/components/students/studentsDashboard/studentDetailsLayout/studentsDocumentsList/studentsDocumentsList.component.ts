@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 import { catchError, map, of, tap } from 'rxjs';
 import { Document } from '../../../../../../../interfaces/Document.interface';
 import { DocumentCardComponent } from '../../../../../../../shared/components/documentCard/documentCard.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-students-documents-list',
-  imports: [DragAreaToUploadComponent, DocumentCardComponent],
+  imports: [DragAreaToUploadComponent, DocumentCardComponent, CommonModule],
   templateUrl: './studentsDocumentsList.component.html',
 })
 export class StudentsDocumentsListComponent implements OnInit {

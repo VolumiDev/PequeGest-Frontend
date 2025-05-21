@@ -3,10 +3,11 @@ import { Document } from '../../../interfaces/Document.interface';
 import { environment } from '../../../../environment/enviroment';
 import { DocumentsService } from '../../../services/documents/documents.service';
 import { catchError, of, take, tap } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-document-card',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './documentCard.component.html',
 })
 export class DocumentCardComponent {
