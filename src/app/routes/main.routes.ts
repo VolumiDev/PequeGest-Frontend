@@ -33,7 +33,7 @@ export const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'dashboard',
+        redirectTo: 'users',
       },
     ],
   },

@@ -26,7 +26,7 @@ export const UserGuard: CanMatchFn = async (
   }
 
   if (role != 'USER') {
-    return router.createUrlTree(['/admin/dashboards']);
+    return router.createUrlTree(['/admin/users']);
   }
   return true;
 };
