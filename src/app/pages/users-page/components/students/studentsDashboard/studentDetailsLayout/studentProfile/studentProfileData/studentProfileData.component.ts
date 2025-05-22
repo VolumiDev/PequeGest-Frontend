@@ -180,7 +180,6 @@ export class StudentProfileDataComponent {
   }
 
   isDifferent(original: StudentDto, newStudent: StudentDto): boolean {
-    debugger;
     if (
       original.name !== newStudent.name ||
       original.lastname !== newStudent.lastname ||
