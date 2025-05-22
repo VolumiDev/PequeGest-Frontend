@@ -21,7 +21,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GRCH_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -33,6 +33,6 @@ jobs:
       - name: Trigger deploy workflow in PequeGest-Deploy
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.DEPLOY_REPO_TOKEN }}
+          token: ${{ secrets.GRCH_TOKEN }}
           repository: VolumiDev/PequeGest-Deploy
           event-type: deploy-request
