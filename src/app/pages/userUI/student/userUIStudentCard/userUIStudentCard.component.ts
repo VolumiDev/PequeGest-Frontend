@@ -23,7 +23,7 @@ export class UserUIStudentCardComponent {
 
   authForm = this.fb.group({
     beneficiary: ['', [Validators.required]],
-    docidBeneficiary: ['', [Validators.required, FormUtils.dniNieValidator()]],
+    docidBeneficiary: ['', [Validators.required, FormUtils.dniNieValidator]],
   });
 
   generateAthorization() {
