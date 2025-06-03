@@ -3,66 +3,69 @@
     <!-- head -->
     <thead>
       <tr>
-        <!-- <th>
-            <label>
-              <input type="checkbox" class="checkbox" />
-            </label>
-          </th> -->
         <th>Nombre</th>
-        <th>Apellidos</th>
         <th>Aula</th>
-        <th></th>
+        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
       @for (student of studentService._students(); track student.hash) {
       <tr>
-        <!-- <th>
-              <label>
-                <input type="checkbox" class="checkbox" />
-              </label>
-            </th> -->
         <td>
           <div class="flex items-center gap-3">
             <div class="avatar">
               <div class="mask mask-squircle h-12 w-12">
-                <!-- src="https://img.daisyui.com/images/profile/demo/2@94.webp" -->
-                <!-- TODO tenemos que poner la direccion de produccion -->
                 <img [src]="BASE_URL + student.imageURL" alt="ImageProfile" />
               </div>
             </div>
             <div>
               <div class="font-bold">
-                {{ student.name }}
+                {{ student.name }} {{ student.lastname }}
               </div>
-              <!-- <div class="text-sm opacity-50">United States</div> -->
             </div>
           </div>
         </td>
-        <td>
-          <!-- <br />
-              <span class="badge badge-ghost badge-sm">Desktop Support Technician</span> -->
-        </td>
         <td>{{ student.classroomDto.classroomName }}</td>
-        <th>
-          <a class="btn btn-secondary" [routerLink]="[student.hash]"
-            >Detalles</a
-          >
-          <button
-            class="mx-1 btn btn-accent"
-            onclick="uploadFile.showModal()"
-            (click)="studentSelection(student)"
-          >
-            <i class="fa-solid fa-image"></i>
-          </button>
+        <td>
+          <!-- botones para pantallas grandes -->
+          <div class="hidden lg:w-full lg:justify-end lg:flex lg:space-x-2">
+            <a class="btn btn-secondary" [routerLink]="[student.hash]"
+              >Detalles</a
+            >
+            <button
+              class="mx-1 btn btn-accent"
+              onclick="uploadFile.showModal()"
+              (click)="studentSelection(student)"
+            >
+              <i class="fa-solid fa-image"></i>
+            </button>
+  
+            <button
+              class="mx-1 btn btn-secondary"
+              (click)="deleteStudentByHash(student.hash!)"
+            >
+              <i class="fa-solid fa-eraser"></i>
+            </button>
+          </div>
 
-          <button
-            class="mx-1 btn btn-secondary"
-            (click)="deleteStudentByHash(student.hash!)"
-          >
-            <i class="fa-solid fa-eraser"></i>
-          </button>
-        </th>
+          <!-- botones para pantallas pequeñas -->
+
+          <!-- Menú desplegable en móviles -->
+    <div class="lg:hidden relative" (clickOutside)="closeDropdown(student.hash!)">
+      <button (click)="toggleDropdown(student.hash!)" class="btn btn-primary" aria-haspopup="true" [attr.aria-expanded]="isDropdownOpen(student.hash!) ? 'true' : 'false'">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+      @if(isDropdownOpen(student.hash!)){
+        <div class="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded shadow-lg z-50">
+          <a class="block px-4 py-2 hover:bg-gray-100" [routerLink]="[student.hash]" (click)="closeDropdown(student.hash!)">Detalles</a>
+          <button class="w-full text-left px-4 py-2 hover:bg-gray-100" onclick="uploadFile.showModal()" (click)="studentSelection(student); closeDropdown(student.hash!)">Subir imagen</button>
+          <button class="w-full text-left px-4 py-2 hover:bg-gray-100" (click)="deleteStudentByHash(student.hash!); closeDropdown(student.hash!)">Eliminar</button>
+        </div>
+
+      }
+    </div>
+
+        </td>
       </tr>
       }
 

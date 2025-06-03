@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SideMenuHeaderComponent } from "./side-menu-header/side-menu-header.component";
 import { SideMenuOptionComponent } from "./side-menu-option/side-menu-option.component";
 
@@ -12,4 +12,13 @@ import { SideMenuOptionComponent } from "./side-menu-option/side-menu-option.com
     }
   `,
 })
-export class SideMenuComponent { }
+export class SideMenuComponent {
+
+  @Input() menuOpen = false;
+  @Output() closeMenu = new EventEmitter<void>();
+
+  closeMenuClicked() {
+    this.closeMenu.emit();
+  }
+
+}

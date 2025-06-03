@@ -1,11 +1,21 @@
-<div id="menu"
-            class="w-[220px] bg-primary min-h-screen z-10 text-slate-300 fixed left-0 h-screen overflow-y-scroll">
+<div
+  id="menu"
+  class="fixed left-0 top-0 h-screen w-[220px] bg-primary text-slate-300 z-20 overflow-y-auto transition-transform duration-300 ease-in-out md:relative md:min-h-screen md:z-auto"
+  [class.translate-x-0]="menuOpen"
+  [class.-translate-x-full]="!menuOpen"
+  [class.md\\:translate-x-0]="true"
+  role="navigation"
+  aria-label="Side menu"
+>
+  <!-- Contenido del menú -->
+  <app-side-menu-header></app-side-menu-header>
+  <app-side-menu-option></app-side-menu-option>
 
-            <!-- side menu header -->
-            <app-side-menu-header/>
-
-
-            <!-- side menu header -->
-            <app-side-menu-option/>
-            
-        </div>
+  <button
+    class="md:hidden absolute top-4 right-4 p-2 rounded hover:bg-gray-200 text-slate-100"
+    (click)="closeMenuClicked()"
+    aria-label="Cerrar menú"
+  >
+    ✕
+  </button>
+</div>

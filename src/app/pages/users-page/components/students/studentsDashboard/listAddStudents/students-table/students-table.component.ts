@@ -28,6 +28,9 @@ export class StudentsTableComponent implements OnInit {
 
   imageUrl: SafeUrl | null = null;
 
+  dropdownOpenHash: string | null = null;
+
+
   studentSelection(student: StudentDto) {
     this.documentService.studentSelected.set(student);
   }
@@ -78,5 +81,24 @@ export class StudentsTableComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+
+
+  toggleDropdown(hash: string) {
+    if (this.dropdownOpenHash === hash) {
+      this.dropdownOpenHash = null;
+    } else {
+      this.dropdownOpenHash = hash;
+    }
+  }
+
+  closeDropdown(hash: string) {
+    if (this.dropdownOpenHash === hash) {
+      this.dropdownOpenHash = null;
+    }
+  }
+
+  isDropdownOpen(hash: string): boolean {
+    return this.dropdownOpenHash === hash;
   }
 }
