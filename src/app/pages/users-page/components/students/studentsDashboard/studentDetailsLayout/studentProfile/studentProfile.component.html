@@ -2,7 +2,7 @@
   <div class="w-full">
     <app-student-profile-data />
   </div>
-  <div class="flex flex-row gap-8">
+  <div class="flex flex-col md:flex-row gap-8">
     @if (studentSignal()?.parentsDto){ @for (parent of
     studentSignal()?.parentsDto; track parent.docid) {
     <app-parent-card [parent]="parent" />

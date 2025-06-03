@@ -1,16 +1,16 @@
-<div id="nav" class="w-full px-2 sm:px-4 md:px-6">
+<div id="nav" class="md:w-fit gap-1 justify-center w-full flex flex-row  lg:flex-col">
   @for (item of menuOptions; track item.route) {
   <a
     [routerLink]="item.route"
     routerLinkActive="bg-secondary text-secondary-content"
-    class="bg-accent text-accent-content my-1 sm:my-2 w-full px-2 sm:px-4 inline-flex items-center border-b py-2 sm:py-3 hover:bg-white/5 transition ease-linear duration-150 rounded-xl sm:rounded-2xl drop-shadow-lg gap-2"
+    class="bg-accent text-accent-content my-1 sm:my-2 w-fit px-2 sm:px-4 inline-flex items-center border-b py-2 sm:py-3 md:max-w-max hover:bg-white/5 transition ease-linear duration-150 rounded-xl sm:rounded-2xl drop-shadow-lg gap-2"
   >
     <div class="flex-shrink-0">
       <i
         class="{{ item.icon }} text-lg sm:text-xl md:text-2xl secondary-content"
       ></i>
     </div>
-    <div class="flex flex-col flex-1 min-w-0">
+    <div class=" lg:flex lg:flex-col lg:flex-1">
       <span class="text-base sm:text-lg font-bold leading-5 truncate">
         {{ item.label }}
       </span>

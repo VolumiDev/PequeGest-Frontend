@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+
 import { RouterOutlet } from '@angular/router';
-import { SideMenuHeaderComponent } from "../../components/side-menu/side-menu-header/side-menu-header.component";
-import { SideMenuOptionComponent } from "../../components/side-menu/side-menu-option/side-menu-option.component";
 import { SideMenuComponent } from "../../components/side-menu/side-menu.component";
 import { CommonModule } from '@angular/common';
+
+import { TW } from '../../../../../tailwind-breakpoints'
 
 @Component({
   selector: 'app-main-layout',
@@ -15,7 +17,25 @@ import { CommonModule } from '@angular/common';
   templateUrl: './main-layout.component.html',
 
 })
-export class MainLayoutComponent {
+export class MainLayoutComponent implements OnInit {
+
+
+  ngOnInit() {
+    this.breakpointObserver.observe([TW.lg, TW.xl, TW['2xl']])
+      .subscribe(result => {
+        if (result.matches) {
+          // Pantallas medianas o grandes: menú abierto y fijo
+          this.menuOpen = true;
+        } else {
+          // Pantallas pequeñas: menú cerrado (drawer)
+          this.menuOpen = false;
+        }
+      });
+  }
+
+
+  private breakpointObserver = inject(BreakpointObserver)
+
   menuOpen = true;
 
   toggleMenu() {
