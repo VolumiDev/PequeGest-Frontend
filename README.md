@@ -13,7 +13,7 @@ Aun hay partes que estan en desarrollo.
 ## Herramientas usadas
 <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
   <img src="https://imgs.search.brave.com/nq8_GOWu0YFCV4etIM3L6kOEWAOehjcjP6G7fJL6CDI/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzUwLzIvYW5ndWxh/ci1pY29uLWxvZ28t/cG5nX3NlZWtsb2dv/LTUwNzMyNC5wbmc" alt="Proyecto 1" width="100"/>
-  <img src="https://imgs.search.brave.com/uttMPv5hfZLji-ueba-aUghrvHKRuG49CKQFdZcMGiY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ0LzEvand0LWlv/LWpzb24td2ViLXRv/a2VuLWxvZ28tcG5n/X3NlZWtsb2dvLTQ0/ODg5OC5wbmc" alt="Proyecto 2" width="200"/>
+  <img src="https://imgs.search.brave.com/uttMPv5hfZLji-ueba-aUghrvHKRuG49CKQFdZcMGiY/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ0LzEvand0LWlv/LWpzb24td2ViLXRv/a2VuLWxvZ28tcG5n/X3NlZWtsb2dvLTQ0/ODg5OC5wbmc" alt="Proyecto 2" width="100"/>
 </div>
 
 
