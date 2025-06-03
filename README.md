@@ -1,8 +1,11 @@
 # PequeFront
 
 Aplicación web para la gestión de un centro de educación infantil. Esta aplicacion se ha llevado a cabo con Angular 19. Hace uso de una API RESTfull que será consumida por varios de frontales distintos, entre los que se encuentra este web.
+
 Se hace uso de JWT para la autenticación de los usuarios. También se incluyen distintos guards para la protección de rutas en funcion del usuario que se loguea.
+
 Interceptor para la inyeccion del token en la peticion a la API.
+
 Tambien se usa una api externa para los formularios en los que se llaman a los distintos paises por region. [Country REST](https://restcountries.com/)
 
 Para los estilos css se ha usado Tailwind y DaisyUI.
