@@ -1,5 +1,11 @@
 # PequeFront
 
+Aplicación web para la gestión de un centro de educación infantil. Esta aplicacion se ha llevado a cabo con Angular 19. Hace uso de una API RESTfull que será consumida por varios de frontales distintos, entre los que se encuentra este web.
+Se hace uso de JWT para la autenticación de los usuarios. También se incluyen distintos guards para la protección de rutas en funcion del usuario que se loguea.
+
+Aun hay partes que estan en desarrollo. 
+Ruta de acceso: [PequeGest](http://volumidev.duckdns.org)
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.3.
 
 ## Development server
